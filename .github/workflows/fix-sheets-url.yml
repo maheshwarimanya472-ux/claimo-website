@@ -1,0 +1,31 @@
+name: Restore Claimo script and connect Google Sheet
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  fix:
+    if: ${{ !contains(github.event.head_commit.message, '[sheets-fix]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore working script and replace Sheets URL
+        run: |
+          git checkout c121e6930b48765ae33e7820ff66fd441dea9c48 -- script.js
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('script.js')
+          s = p.read_text()
+          old = 'https://script.google.com/macros/s/AKfycbyOyLiUNIzZtVGBzGQA_mZFOb0-aaraDQCGOB7zcbXJpGs7VzKbHaLWUjbSpB9b96FB/exec'
+          new = 'https://script.google.com/macros/s/AKfycbzt9umHUacUeWlgfrCLMQ9EBuOZikc9fDV7QzdH0AkzvPCiZc2N-yj-WLUojEU9fCyi/exec'
+          s = s.replace(old, new)
+          p.write_text(s)
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add script.js
+          git diff --cached --quiet || git commit -m "Connect Claimo enquiry form to Google Sheet [sheets-fix]"
+          git push
