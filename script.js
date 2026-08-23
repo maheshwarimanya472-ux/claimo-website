@@ -79,7 +79,6 @@ function initHeroVideoAndCanvas() {
     });
   }
 
-  // Dynamic Animated Canvas: Glowing Waves & Digital Dispute Orbs
   const canvas = document.getElementById('heroVisualCanvas');
   if (!canvas) return;
 
@@ -112,7 +111,6 @@ function initHeroVideoAndCanvas() {
     ctx.clearRect(0, 0, width, height);
     time += 0.015;
 
-    // Draw Cyber Glow Sine Wave Line
     ctx.beginPath();
     ctx.lineWidth = 2;
     ctx.strokeStyle = 'rgba(0, 255, 135, 0.15)';
@@ -123,7 +121,6 @@ function initHeroVideoAndCanvas() {
     }
     ctx.stroke();
 
-    // Draw Secondary Electric Yellow Wave
     ctx.beginPath();
     ctx.lineWidth = 1.5;
     ctx.strokeStyle = 'rgba(212, 255, 50, 0.12)';
@@ -134,12 +131,10 @@ function initHeroVideoAndCanvas() {
     }
     ctx.stroke();
 
-    // Draw Particles and Connecting Lines
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
       p.x += p.vx;
       p.y += p.vy;
-
       if (p.x < 0) p.x = width;
       if (p.x > width) p.x = 0;
       if (p.y < 0) p.y = height;
@@ -152,7 +147,6 @@ function initHeroVideoAndCanvas() {
       ctx.shadowColor = '#00FF87';
       ctx.fill();
 
-      // Connect near neighbors
       for (let j = i + 1; j < particles.length; j++) {
         const p2 = particles[j];
         const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
@@ -166,10 +160,8 @@ function initHeroVideoAndCanvas() {
         }
       }
     }
-
     requestAnimationFrame(animate);
   }
-
   animate();
 }
 
@@ -187,23 +179,18 @@ function initAvatarGuide() {
   const avatarImgLayer = document.getElementById('avatarImgLayer');
   const avatarWidget = document.getElementById('avatarGuideWidget');
 
-  // Mouse Tracking 3D Parallax on Avatar Face
   window.addEventListener('mousemove', (e) => {
     if (!avatarImgLayer) return;
     const rect = avatarWidget.getBoundingClientRect();
     const avatarCenterX = rect.left + rect.width / 2;
     const avatarCenterY = rect.top + rect.height / 2;
-
     const deltaX = (e.clientX - avatarCenterX) / window.innerWidth;
     const deltaY = (e.clientY - avatarCenterY) / window.innerHeight;
-
-    // Subtle 3D tilt & shift towards cursor
     const rotateX = -deltaY * 25;
     const rotateY = deltaX * 25;
     avatarImgLayer.style.transform = `scale(1.15) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translate(${deltaX * 8}px, ${deltaY * 8}px)`;
   }, { passive: true });
 
-  // Scroll-reactive Contextual Speech Prompts
   const scrollPrompts = [
     { id: 'hero', text: "Stuck with a refund or rejected return? Click me to resolve it!" },
     { id: 'shopping-wrong', text: "Refund marked as rejected? Don't accept closed tickets!" },
@@ -234,7 +221,6 @@ function initAvatarGuide() {
     if (drawer) drawer.classList.add('active');
     if (speechBubble) speechBubble.style.display = 'none';
   }
-
   function closeDrawer() {
     if (drawer) drawer.classList.remove('active');
   }
@@ -243,15 +229,11 @@ function initAvatarGuide() {
     if (drawer && drawer.classList.contains('active')) closeDrawer();
     else openDrawer();
   });
-
   if (speechBubble) speechBubble.addEventListener('click', openDrawer);
   if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
 
   quickBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const promptText = btn.getAttribute('data-prompt');
-      handleAvatarQuery(promptText);
-    });
+    btn.addEventListener('click', () => handleAvatarQuery(btn.getAttribute('data-prompt')));
   });
 
   function handleAvatarQuery(query) {
@@ -264,13 +246,11 @@ function initAvatarGuide() {
     setTimeout(() => {
       const botMsg = document.createElement('div');
       botMsg.className = 'mr-auto max-w-[92%] p-3.5 rounded-xl bg-white/10 border border-accent/50 text-white text-xs space-y-2.5 shadow-xl';
-
       let responseText = '';
       let targetCategory = 'Refund not received';
 
       if (query.toLowerCase().includes('refund')) {
         responseText = "Understood! When an e-commerce platform delays or rejects a refund, standard chat support often gets stuck in loops. Claimo prepares a structured dispute packet with invoice facts to route directly to Nodal authorities.";
-        targetCategory = 'Refund not received';
       } else if (query.toLowerCase().includes('return')) {
         responseText = "Seller rejections on return windows are frequently disputable under consumer protection rules. Let's record the rejection timestamp and evidence photos.";
         targetCategory = 'Return rejected';
@@ -289,18 +269,12 @@ function initAvatarGuide() {
         </div>
         <p class="leading-relaxed text-white/90">${responseText}</p>
         <div class="pt-1 flex flex-col gap-2">
-          <button class="btn-cta-primary open-case-modal py-2.5 text-[11px] font-black justify-center shadow-lg shadow-accent/20" data-category="${targetCategory}">
-            Start Dispute for "${targetCategory}" →
-          </button>
-          <a href="https://wa.me/918368631300?text=Hi%20Maya%2C%20I%20have%20an%20issue%3A%20${encodeURIComponent(query)}" target="_blank" rel="noopener noreferrer" class="p-2.5 text-center rounded-xl bg-[#25D366]/20 border border-[#25D366]/50 text-[#25D366] font-extrabold text-[11px] hover:bg-[#25D366] hover:text-black transition-all flex items-center justify-center gap-1.5">
-            <span>💬 Direct WhatsApp Assist (+91 8368631300)</span>
-          </a>
-        </div>
-      `;
+          <button class="btn-cta-primary open-case-modal py-2.5 text-[11px] font-black justify-center shadow-lg shadow-accent/20" data-category="${targetCategory}">Start Dispute for "${targetCategory}" →</button>
+          <a href="https://wa.me/918368631300?text=Hi%20Maya%2C%20I%20have%20an%20issue%3A%20${encodeURIComponent(query)}" target="_blank" rel="noopener noreferrer" class="p-2.5 text-center rounded-xl bg-[#25D366]/20 border border-[#25D366]/50 text-[#25D366] font-extrabold text-[11px] hover:bg-[#25D366] hover:text-black transition-all flex items-center justify-center gap-1.5"><span>💬 Direct WhatsApp Assist (+91 8368631300)</span></a>
+        </div>`;
 
       chatStream.appendChild(botMsg);
       chatStream.scrollTop = chatStream.scrollHeight;
-
       botMsg.querySelectorAll('.open-case-modal').forEach(b => {
         b.addEventListener('click', (e) => {
           e.preventDefault();
@@ -312,7 +286,6 @@ function initAvatarGuide() {
           if (modal) modal.classList.add('active');
         });
       });
-
     }, 450);
   }
 }
@@ -332,7 +305,6 @@ function initJourneyStepper() {
 
   function renderState(state) {
     currentJourneyState = state;
-
     stepBtns.forEach(btn => {
       const btnState = parseInt(btn.getAttribute('data-state'), 10);
       if (btnState === state) {
@@ -343,7 +315,6 @@ function initJourneyStepper() {
         btn.querySelector('.step-num').className = 'step-num w-7 h-7 rounded-full bg-white/10 text-white/70 font-extrabold text-xs flex items-center justify-center shrink-0';
       }
     });
-
     if (chatMsg2) chatMsg2.style.display = state >= 2 ? 'block' : 'none';
     if (chatFilesRow) chatFilesRow.style.display = state >= 3 ? 'grid' : 'none';
     if (chatSynthesisCard) chatSynthesisCard.style.display = state >= 4 ? 'block' : 'none';
@@ -352,24 +323,16 @@ function initJourneyStepper() {
 
   stepBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      const targetState = parseInt(btn.getAttribute('data-state'), 10);
-      renderState(targetState);
+      renderState(parseInt(btn.getAttribute('data-state'), 10));
       clearInterval(journeyAutoInterval);
     });
   });
-
   renderState(1);
 
   const howSection = document.getElementById('how-it-works');
   if (howSection && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          startAutoJourney();
-        } else {
-          clearInterval(journeyAutoInterval);
-        }
-      });
+      entries.forEach(entry => entry.isIntersecting ? startAutoJourney() : clearInterval(journeyAutoInterval));
     }, { threshold: 0.3 });
     observer.observe(howSection);
   }
@@ -406,14 +369,11 @@ function initKineticChaos() {
   const arena = document.getElementById('kineticArena');
   const section = document.getElementById('why-claimo');
   if (!arena || !section) return;
-
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          setTimeout(() => {
-            arena.classList.add('collapsed');
-          }, 800);
+          setTimeout(() => arena.classList.add('collapsed'), 800);
         } else {
           arena.classList.remove('collapsed');
         }
@@ -440,20 +400,13 @@ function initModal() {
   document.querySelectorAll('.open-case-modal').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      
       const preCategory = btn.getAttribute('data-category');
       const prePlan = btn.getAttribute('data-plan');
-
-      if (preCategory && issueSelect) {
-        issueSelect.value = preCategory;
-      }
+      if (preCategory && issueSelect) issueSelect.value = preCategory;
       if (prePlan) {
         const noteInput = document.getElementById('noteInput');
-        if (noteInput && !noteInput.value) {
-          noteInput.value = `Selected tier: ${prePlan}`;
-        }
+        if (noteInput && !noteInput.value) noteInput.value = `Selected tier: ${prePlan}`;
       }
-
       openModal();
     });
   });
@@ -463,24 +416,14 @@ function initModal() {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
-
   function closeModal() {
     if (!modal) return;
     modal.classList.remove('active');
     document.body.style.overflow = '';
   }
-
   if (closeBtn) closeBtn.addEventListener('click', closeModal);
-
-  if (modal) {
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-  }
-
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
+  if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
   if (dropZone) {
     dropZone.addEventListener('click', () => {
@@ -498,70 +441,40 @@ function initModal() {
     });
   }
 
-  // Handle Form Submit & Send to WhatsApp + Email
   window.handleCaseSubmit = function() {
     const issue = document.getElementById('issueSelect')?.value || 'Refund not received';
     const platform = document.getElementById('platformInput')?.value || 'E-Commerce';
     const amount = document.getElementById('amountInput')?.value || '0';
     const note = document.getElementById('noteInput')?.value || 'No additional note.';
     const contact = document.getElementById('contactInput')?.value || 'Anonymous';
-
-    const formattedMsg = `*🚨 NEW CLAIMO CASE INTAKE*\n\n` +
-      `• *Issue:* ${issue}\n` +
-      `• *Platform:* ${platform}\n` +
-      `• *Disputed Amount:* ₹${Number(amount).toLocaleString('en-IN')}\n` +
-      `• *Consumer Contact:* ${contact}\n` +
-      `• *Case Details:* ${note}\n\n` +
-      `_Sent via Claimo Grievance Portal_`;
-
+    const formattedMsg = `*🚨 NEW CLAIMO CASE INTAKE*\n\n` + `• *Issue:* ${issue}\n` + `• *Platform:* ${platform}\n` + `• *Disputed Amount:* ₹${Number(amount).toLocaleString('en-IN')}\n` + `• *Consumer Contact:* ${contact}\n` + `• *Case Details:* ${note}\n\n` + `_Sent via Claimo Grievance Portal_`;
     const encodedWhatsAppMsg = encodeURIComponent(formattedMsg);
     const whatsappUrl = `https://wa.me/${TARGET_WHATSAPP}?text=${encodedWhatsAppMsg}`;
-
     const emailSubject = encodeURIComponent(`Claimo Case: ${issue} on ${platform} (₹${amount})`);
-    const emailBody = encodeURIComponent(
-      `Hello Claimo Team,\n\nI have submitted a consumer grievance:\n\n` +
-      `Issue: ${issue}\n` +
-      `Platform: ${platform}\n` +
-      `Disputed Amount: ₹${amount}\n` +
-      `Contact Name/Number: ${contact}\n` +
-      `Details: ${note}\n\n` +
-      `Please help take this forward.`
-    );
+    const emailBody = encodeURIComponent(`Hello Claimo Team,\n\nI have submitted a consumer grievance:\n\n` + `Issue: ${issue}\n` + `Platform: ${platform}\n` + `Disputed Amount: ₹${amount}\n` + `Contact Name/Number: ${contact}\n` + `Details: ${note}\n\n` + `Please help take this forward.`);
     const emailUrl = `mailto:${TARGET_EMAIL}?subject=${emailSubject}&body=${emailBody}`;
-
     const waBtn = document.getElementById('whatsappDirectLink');
     if (waBtn) waBtn.href = whatsappUrl;
-
     const emailBtn = document.getElementById('emailDirectLink');
     if (emailBtn) emailBtn.href = emailUrl;
-
     const summaryEl = document.getElementById('caseSummaryText');
-    if (summaryEl) {
-      summaryEl.textContent = `Dispute recorded for ₹${Number(amount).toLocaleString('en-IN')} on ${platform} (${issue}).`;
-    }
-
+    if (summaryEl) summaryEl.textContent = `Dispute recorded for ₹${Number(amount).toLocaleString('en-IN')} on ${platform} (${issue}).`;
     if (form) form.classList.add('hidden');
     if (successView) successView.classList.remove('hidden');
-
     window.open(whatsappUrl, '_blank');
   };
 
   window.resetModal = function() {
-    if (form) {
-      form.reset();
-      form.classList.remove('hidden');
-    }
+    if (form) { form.reset(); form.classList.remove('hidden'); }
     if (successView) successView.classList.add('hidden');
     if (dropZone) {
-      dropZone.innerHTML = `
-        <span class="text-base">📎</span>
-        <div class="text-xs text-white/70 font-medium mt-0.5">Click to select files (Invoices, chats, photos)</div>
-      `;
+      dropZone.innerHTML = `<span class="text-base">📎</span><div class="text-xs text-white/70 font-medium mt-0.5">Click to select files (Invoices, chats, photos)</div>`;
       dropZone.classList.remove('border-accent');
     }
     closeModal();
   };
 }
+
 /* CLAIMO GOOGLE SHEETS CONNECTION */
 (() => {
   const CLAIMO_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyOyLiUNIzZtVGBzGQA_mZFOb0-aaraDQCGOB7zcbXJpGs7VzKbHaLWUjbSpB9b96FB/exec';
@@ -583,4 +496,118 @@ function initModal() {
       return originalSubmit();
     };
   });
+})();
+
+/* --------------------------------------------------------------------------
+   9. Claimo Homepage Video + Reviews Section
+   -------------------------------------------------------------------------- */
+(() => {
+  const HERO_VIDEO = 'Person_reads_refund_notification_202608231521.mp4';
+  const REVIEW_VIDEOS = [
+    'Man_resolves_incorrect_Amazon_pa…_202608231540.mp4',
+    'Woman_discussing_refund_resolution_202608231531.mp4'
+  ];
+
+  function addVideoSource(video, src) {
+    if (!video) return;
+    video.querySelectorAll('source').forEach(source => source.remove());
+    video.src = src;
+    video.load();
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.catch === 'function') playPromise.catch(() => {});
+  }
+
+  function initClaimoVideosAndReviews() {
+    const hero = document.getElementById('heroBgVideo');
+    const heroImage = document.querySelector('.hero-bg-image');
+
+    if (hero) {
+      addVideoSource(hero, HERO_VIDEO);
+      hero.style.opacity = '0.68';
+      hero.style.display = 'block';
+      hero.setAttribute('autoplay', '');
+      hero.setAttribute('muted', '');
+      hero.setAttribute('playsinline', '');
+      hero.loop = true;
+    }
+
+    if (heroImage) heroImage.style.display = 'none';
+
+    if (!document.getElementById('claimo-reviews')) {
+      const pricingSection = document.getElementById('pricing');
+      const reviews = document.createElement('section');
+      reviews.id = 'claimo-reviews';
+      reviews.className = 'claimo-reviews-section py-24 sm:py-28 px-6 relative overflow-hidden';
+      reviews.innerHTML = `
+        <div class="max-w-7xl mx-auto">
+          <div class="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
+            <span class="text-xs font-black tracking-widest uppercase text-accent/80">CUSTOMER STORIES</span>
+            <h2 class="text-4xl sm:text-6xl font-black text-white tracking-tight leading-tight mt-2">Real problems. Real resolutions.</h2>
+            <p class="text-sm sm:text-base text-white/55 mt-4 max-w-2xl mx-auto">See how consumers are handling refund, return and order issues without spending hours chasing support.</p>
+          </div>
+          <div class="claimo-review-grid">
+            <article class="claimo-review-card">
+              <div class="claimo-review-video-wrap">
+                <video class="claimo-review-video" controls playsinline preload="metadata">
+                  <source src="${REVIEW_VIDEOS[0]}" type="video/mp4">
+                </video>
+              </div>
+              <div class="claimo-review-copy">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-accent">Customer story</span>
+                <h3 class="text-lg font-black text-white mt-1">Incorrect Amazon order resolved</h3>
+              </div>
+            </article>
+            <article class="claimo-review-card">
+              <div class="claimo-review-video-wrap">
+                <video class="claimo-review-video" controls playsinline preload="metadata">
+                  <source src="${REVIEW_VIDEOS[1]}" type="video/mp4">
+                </video>
+              </div>
+              <div class="claimo-review-copy">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-accent">Customer story</span>
+                <h3 class="text-lg font-black text-white mt-1">Refund resolution explained</h3>
+              </div>
+            </article>
+          </div>
+        </div>`;
+      if (pricingSection) pricingSection.parentNode.insertBefore(reviews, pricingSection);
+      else document.querySelector('main')?.appendChild(reviews);
+    }
+
+    const desktopNav = document.querySelector('header nav');
+    if (desktopNav && !desktopNav.querySelector('[href="#claimo-reviews"]')) {
+      const reviewLink = document.createElement('a');
+      reviewLink.href = '#claimo-reviews';
+      reviewLink.className = 'nav-item hover:text-white transition-colors';
+      reviewLink.textContent = 'Reviews';
+      desktopNav.insertBefore(reviewLink, desktopNav.lastElementChild);
+    }
+
+    const mobileNav = document.querySelector('#mobileDrawer > div');
+    if (mobileNav && !mobileNav.querySelector('[href="#claimo-reviews"]')) {
+      const reviewLink = document.createElement('a');
+      reviewLink.href = '#claimo-reviews';
+      reviewLink.className = 'mobile-nav-link text-lg text-white/80 hover:text-white';
+      reviewLink.textContent = 'Reviews';
+      const pricingLink = mobileNav.querySelector('[href="#pricing"]');
+      if (pricingLink) pricingLink.before(reviewLink);
+      else mobileNav.insertBefore(reviewLink, mobileNav.firstElementChild);
+    }
+  }
+
+  const style = document.createElement('style');
+  style.textContent = `
+    .claimo-reviews-section { background: linear-gradient(180deg, rgba(14,17,22,.35) 0%, rgba(7,9,11,1) 100%); }
+    .claimo-review-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; max-width: 920px; margin: 0 auto; }
+    .claimo-review-card { overflow: hidden; border: 1px solid rgba(255,255,255,.10); border-radius: 28px; background: rgba(18,21,27,.82); box-shadow: 0 24px 70px rgba(0,0,0,.35); transition: transform .35s ease, border-color .35s ease; }
+    .claimo-review-card:hover { transform: translateY(-4px); border-color: rgba(0,255,135,.35); }
+    .claimo-review-video-wrap { width: 100%; aspect-ratio: 9 / 16; background: #050607; overflow: hidden; }
+    .claimo-review-video { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .claimo-review-copy { padding: 1.1rem 1.2rem 1.25rem; }
+    @media (max-width: 767px) { .claimo-review-grid { grid-template-columns: 1fr; max-width: 430px; } }
+  `;
+  document.head.appendChild(style);
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initClaimoVideosAndReviews, { once: true });
+  else initClaimoVideosAndReviews();
 })();
