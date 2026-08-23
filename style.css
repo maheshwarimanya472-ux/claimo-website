@@ -84,3 +84,16 @@ body { overflow-x: hidden; position: relative; min-height: 100vh; line-height: 1
   #shopping-wrong > div.max-w-6xl > div:first-child { min-height:300px !important; }
   #shopping-wrong > div.max-w-6xl > div:first-child > img { height:300px !important; min-height:300px !important; }
 }
+
+
+/* Final Claimo visual cleanup */
+.hero-center-headline, .hero-center-subline { color:#fff !important; text-shadow:0 2px 18px rgba(0,0,0,.9); }
+.hero-center-headline { font-weight:800 !important; }
+.top-hero-viewport > .relative.z-10 { padding-top:15rem !important; transform:translateX(-1.5rem) !important; }
+@media (min-width:768px){ .top-hero-viewport > .relative.z-10 { padding-top:18rem !important; transform:translateX(-2.5rem) !important; } }
+#avatarGuideWidget { position:fixed !important; left:1.5rem !important; bottom:1.5rem !important; top:auto !important; right:auto !important; z-index:60 !important; }
+#avatarGuideWidget .avatar-trigger-btn { position:relative !important; }
+#avatarSpeechBubble { display:none !important; }
+#shopping-wrong .lg\:col-span-5 { min-height:28rem !important; }
+#shopping-wrong .lg\:col-span-5 > img { width:100% !important; height:28rem !important; object-fit:cover !important; object-position:center !important; display:block !important; }
+@media (max-width:1023px){ #shopping-wrong .lg\:col-span-5 > img { height:22rem !important; } }
