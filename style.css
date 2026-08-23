@@ -1,0 +1,711 @@
+/* ==========================================================================
+   CLAIMO — DESIGN SYSTEM & STYLESHEET
+   Radically Visual, Interactive, Minimal, and Product-Led
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS Custom Properties / Design Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  --bg-primary: #07090B;
+  --bg-surface: #0E1116;
+  --bg-card: #12151B;
+  --bg-card-hover: #161A22;
+  
+  --text-primary: #FFFFFF;
+  --text-secondary: #F5F5F3;
+  --text-muted: #8E96A4;
+  --text-subtle: #525966;
+
+  --accent: #00FF87;
+  --accent-glow: #D4FF32;
+  --accent-dark: #00B359;
+  --accent-surface: rgba(0, 255, 135, 0.08);
+  --accent-border: rgba(0, 255, 135, 0.25);
+  
+  --danger: #FF4D4D;
+  --danger-surface: rgba(255, 77, 77, 0.1);
+  --danger-border: rgba(255, 77, 77, 0.3);
+
+  --warning: #FFB020;
+  --warning-surface: rgba(255, 176, 32, 0.1);
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Space Grotesk', var(--font-sans);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-2xl: 36px;
+  --radius-full: 9999px;
+
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & Global Styles
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* --------------------------------------------------------------------------
+   3. Ambient Background & Spotlight
+   -------------------------------------------------------------------------- */
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  opacity: 0.45;
+  will-change: transform;
+}
+
+.orb-top-left {
+  top: -10%;
+  left: -5%;
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(0, 255, 135, 0.16) 0%, transparent 70%);
+  animation: floatOrb 18s ease-in-out infinite alternate;
+}
+
+.orb-top-right {
+  top: 5%;
+  right: -5%;
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(212, 255, 50, 0.13) 0%, transparent 70%);
+  animation: floatOrb 22s ease-in-out infinite alternate-reverse;
+}
+
+.orb-center {
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(0, 255, 135, 0.08) 0%, transparent 70%);
+}
+
+.noise-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
+}
+
+.cursor-spotlight {
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 255, 135, 0.07) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 1;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, 30px) scale(1.1); }
+  100% { transform: translate(-30px, 50px) scale(0.95); }
+}
+
+/* --------------------------------------------------------------------------
+   4. Buttons & CTA Elements
+   -------------------------------------------------------------------------- */
+.btn-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--accent);
+  color: #000000;
+  font-weight: 800;
+  font-size: 0.875rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--accent);
+  box-shadow: 0 4px 20px rgba(0, 255, 135, 0.25);
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  text-decoration: none;
+}
+
+.btn-cta-primary:hover {
+  background: var(--accent-glow);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 255, 135, 0.45);
+}
+
+.btn-cta-hero {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, #00FF87 0%, #D4FF32 100%);
+  padding: 0.65rem 0.65rem 0.65rem 1.75rem;
+  border-radius: var(--radius-full);
+  box-shadow: 0 10px 40px rgba(0, 255, 135, 0.35);
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  border: none;
+}
+
+.btn-cta-hero:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 50px rgba(0, 255, 135, 0.55);
+}
+
+.btn-secondary-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.btn-secondary-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   5. Typography Helpers
+   -------------------------------------------------------------------------- */
+.text-accent-glow {
+  background: linear-gradient(135deg, #00FF87 0%, #D4FF32 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.hero-title {
+  font-size: clamp(2.6rem, 5.8vw, 4.6rem);
+  letter-spacing: -0.035em;
+}
+
+.glow-text {
+  text-shadow: 0 0 40px rgba(0, 255, 135, 0.45);
+}
+
+/* --------------------------------------------------------------------------
+   6. Header & Navigation
+   -------------------------------------------------------------------------- */
+.site-header {
+  background: rgba(7, 9, 11, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.site-header.scrolled {
+  background: rgba(7, 9, 11, 0.92);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.hamburger-lines {
+  width: 22px;
+  height: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hamburger-lines span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: #FFFFFF;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+.mobile-drawer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+}
+
+.mobile-drawer.open {
+  max-height: 420px;
+}
+
+/* --------------------------------------------------------------------------
+   7. Hero Visual / Phone Mockup Simulation
+   -------------------------------------------------------------------------- */
+.hero-visual-wrapper {
+  transform: rotate(-1deg);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-visual-wrapper:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+.hero-sim-card {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes popIn1 {
+  0% { opacity: 0; transform: translateY(15px) scale(0.95); }
+  15%, 100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes popIn2 {
+  0%, 25% { opacity: 0; transform: translateY(15px) scale(0.95); }
+  45%, 100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes popIn3 {
+  0%, 55% { opacity: 0; transform: translateY(15px) scale(0.95); }
+  75%, 100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.animate-pop-in-1 {
+  animation: popIn1 8s infinite;
+}
+
+.animate-pop-in-2 {
+  animation: popIn2 8s infinite;
+}
+
+.animate-pop-in-3 {
+  animation: popIn3 8s infinite;
+}
+
+/* --------------------------------------------------------------------------
+   8. Section 2: Timeline Animations
+   -------------------------------------------------------------------------- */
+.timeline-step {
+  transition: transform 0.3s ease;
+}
+
+.timeline-step:hover {
+  transform: translateX(4px);
+}
+
+.timeline-step-pulsing {
+  animation: pulseCard 2.2s infinite;
+}
+
+@keyframes pulseCard {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* --------------------------------------------------------------------------
+   9. Section 3: Problems Cards
+   -------------------------------------------------------------------------- */
+.problem-card {
+  min-height: 280px;
+  background: #0E1116;
+}
+
+.problem-card:hover {
+  background: #141820;
+  box-shadow: 0 12px 35px rgba(0, 255, 135, 0.08);
+  transform: translateY(-4px);
+}
+
+.card-hover-drawer {
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.problem-card:hover .card-hover-drawer {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   10. Section 4: How Claimo Works Phone Journey
+   -------------------------------------------------------------------------- */
+.journey-step-btn.active {
+  background: rgba(0, 255, 135, 0.08);
+  border-color: var(--accent);
+}
+
+.journey-step-btn.active .step-num {
+  background: var(--accent);
+  color: #000000;
+}
+
+.phone-journey-frame {
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 255, 135, 0.08);
+}
+
+.chat-bubble {
+  animation: fadeInBubble 0.4s ease forwards;
+}
+
+@keyframes fadeInBubble {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   11. Section 5: Chaos Stack
+   -------------------------------------------------------------------------- */
+.chaos-card:nth-child(1) { transform: rotate(-1deg); }
+.chaos-card:nth-child(2) { transform: rotate(1.5deg) translateY(-2px); }
+.chaos-card:nth-child(3) { transform: rotate(-1.5deg) translateY(-4px); }
+.chaos-card:nth-child(4) { transform: rotate(0.8deg) translateY(-6px); }
+
+/* --------------------------------------------------------------------------
+   12. Section 6: Pricing
+   -------------------------------------------------------------------------- */
+.pricing-card {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-6px);
+}
+
+.featured-pricing {
+  background: radial-gradient(circle at top right, rgba(0, 255, 135, 0.12) 0%, #111814 100%);
+}
+
+/* --------------------------------------------------------------------------
+   13. Section 7: Kinetic Floating Typography
+   -------------------------------------------------------------------------- */
+.floating-tag {
+  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform, opacity;
+}
+
+.tag-1 { animation: floatTag1 6s ease-in-out infinite alternate; }
+.tag-2 { animation: floatTag2 7s ease-in-out infinite alternate; }
+.tag-3 { animation: floatTag3 5.5s ease-in-out infinite alternate; }
+.tag-4 { animation: floatTag4 6.5s ease-in-out infinite alternate; }
+.tag-5 { animation: floatTag5 8s ease-in-out infinite alternate; }
+.tag-6 { animation: floatTag6 7.5s ease-in-out infinite alternate; }
+
+@keyframes floatTag1 { 0% { transform: translate(0, 0); } 100% { transform: translate(15px, 12px); } }
+@keyframes floatTag2 { 0% { transform: translate(0, 0); } 100% { transform: translate(-18px, 15px); } }
+@keyframes floatTag3 { 0% { transform: translate(0, 0); } 100% { transform: translate(12px, -15px); } }
+@keyframes floatTag4 { 0% { transform: translate(0, 0); } 100% { transform: translate(-14px, -12px); } }
+@keyframes floatTag5 { 0% { transform: translate(0, 0); } 100% { transform: translate(16px, 10px); } }
+@keyframes floatTag6 { 0% { transform: translate(0, 0); } 100% { transform: translate(-12px, 14px); } }
+
+.kinetic-arena.collapsed .chaos-badge {
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%) scale(0) !important;
+  opacity: 0 !important;
+}
+
+.kinetic-arena.collapsed .converged-container {
+  transform: scale(1.1);
+}
+
+/* --------------------------------------------------------------------------
+   14. Modal Dialog
+   -------------------------------------------------------------------------- */
+.case-modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.case-modal-backdrop.active .case-modal-container {
+  transform: scale(1);
+}
+
+@keyframes bounceSubtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-bounce-subtle {
+  animation: bounceSubtle 3s ease-in-out infinite;
+}
+
+/* --------------------------------------------------------------------------
+   15. Responsive Tweaks
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .problems-carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1rem;
+  }
+
+  .problem-card {
+    min-width: 260px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   16. WhatsApp Floating CTA & Visual Enhancements
+   -------------------------------------------------------------------------- */
+.hero-section {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero-section img {
+  pointer-events: none;
+  user-select: none;
+}
+
+#whatsappDirectLink:hover {
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   17. Interactive AI Avatar Guide Widget
+   -------------------------------------------------------------------------- */
+.avatar-trigger-btn {
+  background: rgba(18, 22, 30, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 255, 135, 0.25);
+  cursor: pointer;
+  z-index: 50;
+}
+
+.avatar-speech-bubble {
+  transform-origin: bottom left;
+  animation: floatBubble 4s ease-in-out infinite alternate;
+}
+
+@keyframes floatBubble {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-5px); }
+}
+
+.avatar-chat-drawer.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.avatar-quick-btn {
+  cursor: pointer;
+}
+
+.avatar-quick-btn:hover {
+  background: rgba(0, 255, 135, 0.12);
+  border-color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   18. Hero Animated Canvas & Video Background Layer
+   -------------------------------------------------------------------------- */
+#heroVisualCanvas {
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.hero-section {
+  position: relative;
+  isolation: isolate;
+  background: #07090B;
+}
+
+/* --------------------------------------------------------------------------
+   19. Ultra-Animated Moving Avatar Physics & Holographic Orbitals
+   -------------------------------------------------------------------------- */
+.avatar-floating-container {
+  animation: avatarDrift 5s ease-in-out infinite alternate;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+@keyframes avatarDrift {
+  0% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-8px) rotate(-2deg); }
+  66% { transform: translateY(-4px) rotate(2deg); }
+  100% { transform: translateY(-10px) rotate(0deg); }
+}
+
+.avatar-hologram-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px dashed rgba(0, 255, 135, 0.6);
+  animation: rotateHoloRing 10s linear infinite;
+  pointer-events: none;
+}
+
+.avatar-hologram-ring-2 {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 1.5px dotted rgba(212, 255, 50, 0.4);
+  animation: rotateHoloRingReverse 14s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rotateHoloRing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes rotateHoloRingReverse {
+  0% { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.avatar-image-layer {
+  transition: transform 0.15s ease-out;
+  transform-style: preserve-3d;
+}
+
+/* Soundwave Equalizer when speaking */
+.avatar-soundbars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 12px;
+}
+
+.avatar-soundbars span {
+  display: block;
+  width: 2.5px;
+  background: var(--accent);
+  border-radius: 2px;
+  animation: soundWave 1.2s ease-in-out infinite alternate;
+}
+
+.avatar-soundbars span:nth-child(1) { height: 4px; animation-delay: 0.1s; }
+.avatar-soundbars span:nth-child(2) { height: 10px; animation-delay: 0.3s; }
+.avatar-soundbars span:nth-child(3) { height: 7px; animation-delay: 0.2s; }
+.avatar-soundbars span:nth-child(4) { height: 12px; animation-delay: 0.4s; }
+
+@keyframes soundWave {
+  0% { height: 3px; }
+  100% { height: 12px; }
+}
+
+/* Pulsing radar ring */
+.avatar-radar-pulse {
+  position: absolute;
+  inset: -15px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 255, 135, 0.8);
+  animation: radarWave 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes radarWave {
+  0% { transform: scale(0.8); opacity: 0.9; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   20. Full-Screen Top Hero Styling & 2-Sentence Centered Animations
+   -------------------------------------------------------------------------- */
+.top-hero-viewport {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #07090B;
+  isolation: isolate;
+}
+
+.hero-bg-image {
+  pointer-events: none;
+  user-select: none;
+  animation: heroImageGentleZoom 20s ease-in-out infinite alternate;
+}
+
+@keyframes heroImageGentleZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+.bg-radial-vignette {
+  background: radial-gradient(circle at center, rgba(7, 9, 11, 0.75) 0%, rgba(7, 9, 11, 0.45) 55%, rgba(7, 9, 11, 0.92) 100%);
+}
+
+.hero-center-headline {
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 255, 135, 0.2);
+  animation: headlineFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-center-subline {
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.9);
+  animation: sublineFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes headlineFadeIn {
+  0% { opacity: 0; transform: translateY(20px) scale(0.97); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes sublineFadeIn {
+  0% { opacity: 0; transform: translateY(15px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseSlow {
+  0%, 100% { filter: brightness(1) drop-shadow(0 0 10px rgba(0, 255, 135, 0.4)); }
+  50% { filter: brightness(1.2) drop-shadow(0 0 25px rgba(0, 255, 135, 0.8)); }
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 3.5s ease-in-out infinite;
+}

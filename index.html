@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claimo — Consumer × E-Commerce Grievance Assistance</title>
+  <meta name="description" content="Your refund shouldn't become a second job. Something went wrong with your order? Tell Claimo. We'll help take it forward.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%2308090A'/><path d='M30 48 L42 60 L70 32' stroke='%2300FF87' stroke-width='10' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='74' cy='26' r='5' fill='%23D4FF32'/></svg>">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN with Claimo Design Token Configuration -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#07090B',
+            surface: '#0E1116',
+            card: '#12151B',
+            accent: '#00FF87',
+            'accent-glow': '#D4FF32',
+            secondary: '#F5F5F3',
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-primary text-secondary antialiased selection:bg-accent selection:text-black">
+
+  <!-- Interactive Floating WhatsApp Quick Assist Pill (Bottom Right) -->
+  <a href="https://wa.me/918368631300?text=Hi%20Claimo%2C%20I%20have%20an%20e-commerce%20refund%2Forder%20issue%20and%20need%20assistance." target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-full bg-[#25D366] text-black font-extrabold text-xs shadow-2xl shadow-[#25D366]/40 hover:scale-105 transition-all group" aria-label="Chat on WhatsApp">
+    <span class="w-2.5 h-2.5 rounded-full bg-black animate-ping"></span>
+    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+    <span class="hidden sm:inline">WhatsApp Help</span>
+  </a>
+
+  <!-- ========================================== -->
+  <!-- INTERACTIVE ANIMATED MOVING AI AVATAR GUIDE (Bottom Left) -->
+  <!-- ========================================== -->
+  <div class="fixed bottom-6 left-6 z-50 flex flex-col items-start avatar-floating-container" id="avatarGuideWidget">
+    
+    <!-- Proactive Speech Bubble with Live Voice Waves -->
+    <div class="avatar-speech-bubble mb-3 p-3.5 rounded-2xl bg-[#11141A]/95 border-2 border-accent/60 shadow-2xl backdrop-blur-xl text-xs text-white max-w-[280px] cursor-pointer group" id="avatarSpeechBubble">
+      <div class="flex items-center justify-between gap-2 mb-1.5">
+        <div class="flex items-center gap-2">
+          <span class="text-[10px] font-mono font-bold text-accent uppercase tracking-wider">Maya · Copilot</span>
+          <div class="avatar-soundbars">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <span class="w-2 h-2 rounded-full bg-accent animate-ping"></span>
+      </div>
+      <p class="font-medium text-white/95 leading-snug" id="avatarSpeechText">Stuck with a refund or rejected return? Click me to resolve it!</p>
+    </div>
+
+    <!-- Animated Moving Avatar Trigger Button with 3D Hologram Orbitals -->
+    <button class="avatar-trigger-btn relative group flex items-center gap-3.5 p-1.5 pr-4 rounded-full bg-[#12161E]/95 border-2 border-accent shadow-2xl shadow-accent/30 hover:scale-110 transition-transform" id="avatarTriggerBtn" aria-label="Open Claimo Resolution Guide">
+      
+      <!-- Holographic rotating rings & radar wave -->
+      <div class="avatar-radar-pulse"></div>
+      <div class="avatar-hologram-ring"></div>
+      <div class="avatar-hologram-ring-2"></div>
+
+      <!-- Avatar 3D Image Orb -->
+      <div class="relative w-14 h-14 rounded-full overflow-hidden border-2 border-accent shadow-inner bg-[#07090B]" id="avatarOrbContainer">
+        <img src="assets/avatar-guide.jpg" alt="Maya Claimo AI Avatar Guide" class="avatar-image-layer w-full h-full object-cover transform scale-110" id="avatarImgLayer">
+        <div class="absolute inset-0 bg-gradient-to-tr from-accent/20 to-transparent pointer-events-none"></div>
+      </div>
+
+      <div class="text-left">
+        <div class="text-xs font-black text-white flex items-center gap-1.5">
+          <span>Maya</span>
+          <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent text-black font-extrabold font-mono uppercase animate-pulse">Live AI</span>
+        </div>
+        <div class="text-[10px] text-accent font-mono font-bold">Ask me anything →</div>
+      </div>
+    </button>
+
+    <!-- Avatar Interactive Chat Drawer Modal -->
+    <div class="avatar-chat-drawer fixed bottom-24 left-6 z-50 w-[340px] sm:w-[380px] rounded-3xl bg-[#0D1016]/98 border-2 border-accent/40 shadow-2xl backdrop-blur-2xl overflow-hidden transition-all duration-300 opacity-0 pointer-events-none transform translate-y-4" id="avatarChatDrawer">
+      
+      <!-- Drawer Header -->
+      <div class="p-4 bg-[#141822] border-b border-white/10 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-accent">
+            <img src="assets/avatar-guide.jpg" alt="Maya Avatar" class="w-full h-full object-cover">
+          </div>
+          <div>
+            <div class="text-xs font-black text-white">Maya — Resolution Guide</div>
+            <div class="text-[10px] text-accent font-mono">● Active & Ready to direct</div>
+          </div>
+        </div>
+        <button class="w-7 h-7 rounded-full bg-white/5 text-white/60 hover:text-white flex items-center justify-center text-xs" id="closeAvatarDrawer">✕</button>
+      </div>
+
+      <!-- Drawer Chat Stream -->
+      <div class="p-4 h-[280px] overflow-y-auto space-y-3 text-xs" id="avatarChatStream">
+        <div class="p-3 rounded-2xl bg-white/5 border border-white/10 text-white/90 space-y-1">
+          <p class="font-bold text-accent">Hello! I'm Maya.</p>
+          <p>Tell me what went wrong with your order, and I'll direct you to the exact escalation step.</p>
+        </div>
+
+        <div class="text-[10px] font-mono text-white/40 uppercase tracking-wider pt-1">Select your situation:</div>
+        
+        <div class="flex flex-col gap-2" id="avatarQuickOptions">
+          <button class="avatar-quick-btn text-left p-2.5 rounded-xl bg-white/5 hover:bg-accent/10 border border-white/10 hover:border-accent text-white transition-all flex items-center justify-between" data-prompt="My refund is stuck on Flipkart / Amazon">
+            <span>💳 Refund stuck after cancellation</span>
+            <span class="text-accent">→</span>
+          </button>
+          <button class="avatar-quick-btn text-left p-2.5 rounded-xl bg-white/5 hover:bg-accent/10 border border-white/10 hover:border-accent text-white transition-all flex items-center justify-between" data-prompt="Return request was rejected by seller">
+            <span>📦 Return request rejected by seller</span>
+            <span class="text-accent">→</span>
+          </button>
+          <button class="avatar-quick-btn text-left p-2.5 rounded-xl bg-white/5 hover:bg-accent/10 border border-white/10 hover:border-accent text-white transition-all flex items-center justify-between" data-prompt="Package arrived damaged or defective">
+            <span>💔 Arrived damaged / wrong item</span>
+            <span class="text-accent">→</span>
+          </button>
+          <button class="avatar-quick-btn text-left p-2.5 rounded-xl bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/30 text-[#25D366] font-bold transition-all flex items-center justify-between" data-prompt="Direct WhatsApp Help">
+            <span>💬 Chat directly with specialist (+91 8368631300)</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Drawer Bottom Actions -->
+      <div class="p-3 bg-[#0A0D12] border-t border-white/10 flex items-center gap-2">
+        <button class="btn-cta-primary open-case-modal flex-1 py-2.5 text-xs justify-center font-black" onclick="document.getElementById('avatarChatDrawer').classList.remove('active')">
+          Open Case Intake Form →
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Header Navigation -->
+  <header class="site-header fixed top-0 left-0 right-0 z-40 transition-all duration-300" id="siteHeader">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="brand-link flex items-center gap-3 group" aria-label="Claimo Home">
+        <div class="w-10 h-10 rounded-xl bg-[#13161A] border border-white/10 flex items-center justify-center relative overflow-hidden group-hover:border-accent/40 transition-colors shadow-lg shadow-black/50">
+          <svg class="w-6 h-6 text-accent" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3L4 7V12C4 16.5 7.5 20.6 12 21.8C16.5 20.6 20 16.5 20 12V7L12 3Z" stroke="currentColor" stroke-width="1.8" opacity="0.4"/>
+            <path d="M8.5 12L11 14.5L15.5 9.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="absolute inset-0 bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        </div>
+        <div class="flex items-baseline gap-1.5">
+          <span class="font-black tracking-wider text-xl text-white">CLAIM<span class="text-accent">O</span></span>
+          <span class="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-white/60">Beta</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-white/70" aria-label="Primary Navigation">
+        <a href="#shopping-wrong" class="nav-item hover:text-white transition-colors">The Problem</a>
+        <a href="#problems" class="nav-item hover:text-white transition-colors">What We Handle</a>
+        <a href="#how-it-works" class="nav-item hover:text-white transition-colors">How Claimo Works</a>
+        <a href="#pricing" class="nav-item hover:text-white transition-colors">Pricing</a>
+        <a href="#why-claimo" class="nav-item hover:text-white transition-colors">Why Claimo</a>
+      </nav>
+
+      <!-- CTA & WhatsApp Direct -->
+      <div class="flex items-center gap-3">
+        <a href="https://wa.me/918368631300?text=Hi%20Claimo%2C%20I%20have%20an%20e-commerce%20complaint." target="_blank" rel="noopener noreferrer" class="hidden lg:inline-flex items-center gap-1.5 text-xs text-white/80 hover:text-white px-3.5 py-2 rounded-full bg-white/5 border border-white/10 hover:border-accent/40 transition-colors">
+          <span class="text-[#25D366]">●</span>
+          <span>+91 8368631300</span>
+        </a>
+
+        <button class="btn-cta-primary open-case-modal hidden sm:inline-flex items-center gap-2 group">
+          <span>Get Help</span>
+          <svg class="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <button class="md:hidden hamburger-btn p-2 text-white/80 hover:text-white" id="mobileToggle" aria-label="Open menu" aria-expanded="false">
+          <div class="hamburger-lines">
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-drawer md:hidden" id="mobileDrawer" aria-hidden="true">
+      <div class="px-6 py-8 flex flex-col gap-6 bg-[#0B0D10]/95 backdrop-blur-2xl border-b border-white/10">
+        <a href="#shopping-wrong" class="mobile-nav-link text-lg text-white/80 hover:text-white">The Problem</a>
+        <a href="#problems" class="mobile-nav-link text-lg text-white/80 hover:text-white">What We Handle</a>
+        <a href="#how-it-works" class="mobile-nav-link text-lg text-white/80 hover:text-white">How Claimo Works</a>
+        <a href="#pricing" class="mobile-nav-link text-lg text-white/80 hover:text-white">Pricing</a>
+        <a href="#why-claimo" class="mobile-nav-link text-lg text-white/80 hover:text-white">Why Claimo</a>
+        
+        <div class="pt-2 flex flex-col gap-3">
+          <a href="https://wa.me/918368631300" target="_blank" rel="noopener noreferrer" class="w-full py-3 rounded-xl bg-[#25D366]/20 border border-[#25D366]/40 text-[#25D366] font-bold text-center flex items-center justify-center gap-2">
+            <span>Chat on WhatsApp (+91 8368631300)</span>
+          </a>
+          <button class="btn-cta-primary open-case-modal w-full py-4 text-center justify-center font-black">
+            Get Help →
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative z-10">
+
+    <!-- ================================================================= -->
+    <!-- TOP FULL-SCREEN CINEMATIC HERO: GIRL WITH PHONE & AMAZON NOTIF -->
+    <!-- ONLY 2 ANIMATED SENTENCES IN CENTER -->
+    <!-- ================================================================= -->
+    <section class="top-hero-viewport relative w-full min-h-screen flex items-center justify-center overflow-hidden" id="hero">
+      
+      <!-- FULL-SCREEN CINEMATIC BACKGROUND VIDEO & PHOTO -->
+      <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        
+        <!-- Background Video Loop if present -->
+        <video id="heroBgVideo" class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000" autoplay loop muted playsinline>
+          <source src="assets/hero-bg.mp4" type="video/mp4">
+          <source src="assets/hero-phone.mp4" type="video/mp4">
+        </video>
+
+        <!-- Dynamic High-Res Photo of Girl on Sofa with Amazon Refund Cancelled Alert -->
+        <img src="assets/girl-amazon-refund.jpg" alt="Girl using phone receiving Amazon refund cancelled notification" class="hero-bg-image absolute inset-0 w-full h-full object-cover object-center filter brightness-95 contrast-110 transform scale-100 transition-transform duration-1000">
+
+        <!-- Animated Ambient Cyber Glow Mesh Overlay -->
+        <canvas id="heroVisualCanvas" class="absolute inset-0 w-full h-full opacity-40 mix-blend-screen"></canvas>
+
+        <!-- Subtle Central Focus Vignette so text is 100% readable while the girl and phone are super clear -->
+        <div class="absolute inset-0 bg-gradient-to-t from-[#07090B] via-black/40 to-[#07090B]/60"></div>
+        <div class="absolute inset-0 bg-radial-vignette"></div>
+      </div>
+
+      <!-- Top Ambient Floating Alert on Phone Overlay -->
+      <div class="absolute top-28 left-6 sm:left-12 z-20 hidden md:flex items-center gap-3 p-3.5 rounded-2xl bg-[#0F1218]/90 border-2 border-rose-500/50 shadow-2xl backdrop-blur-xl animate-pop-in-1">
+        <div class="w-8 h-8 rounded-xl bg-rose-500/20 text-rose-400 font-black flex items-center justify-center text-sm animate-pulse">✕</div>
+        <div>
+          <div class="text-xs font-black text-rose-300">Amazon India: Refund Cancelled</div>
+          <div class="text-[10px] text-white/70 font-mono">Order #405-1234567 · Refund Rejected</div>
+        </div>
+      </div>
+
+      <div class="absolute top-28 right-6 sm:right-12 z-20 hidden lg:flex items-center gap-3 p-3.5 rounded-2xl bg-[#0D1C14]/90 border-2 border-accent/60 shadow-2xl backdrop-blur-xl animate-pop-in-3">
+        <div class="w-8 h-8 rounded-xl bg-accent text-black font-black flex items-center justify-center text-sm">✓</div>
+        <div>
+          <div class="text-xs font-black text-accent">Claimo: Don't worry.</div>
+          <div class="text-[10px] text-white/80 font-mono">Let's take your complaint forward.</div>
+        </div>
+      </div>
+
+      <!-- CENTER CONTENT: EXACTLY 2 ANIMATED SENTENCES -->
+      <div class="relative z-10 max-w-5xl mx-auto px-6 text-center flex flex-col items-center justify-center space-y-8 pt-16">
+        
+        <!-- Eyebrow Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/60 border border-accent/40 backdrop-blur-md shadow-xl animate-fade-in">
+          <span class="w-2 h-2 rounded-full bg-accent animate-ping"></span>
+          <span class="text-xs font-black uppercase tracking-widest text-accent">CONSUMER × E-COMMERCE</span>
+        </div>
+
+        <!-- SENTENCE 1: Huge Animated Headline -->
+        <h1 class="hero-center-headline font-black tracking-tight text-white leading-[1.06] text-4xl sm:text-6xl md:text-7xl max-w-4xl">
+          Your refund<br>
+          shouldn't become<br>
+          <span class="text-accent-glow animate-pulse-slow">a second job.</span>
+        </h1>
+
+        <!-- SENTENCE 2: Clean Animated Supporting Subline -->
+        <p class="hero-center-subline text-lg sm:text-2xl text-white/90 font-medium max-w-2xl leading-relaxed animate-fade-in-delayed">
+          Something went wrong with your order? Tell Claimo. We'll help take it forward.
+        </p>
+
+        <!-- CTAs -->
+        <div class="pt-4 flex flex-wrap items-center justify-center gap-4">
+          <button class="btn-cta-hero open-case-modal flex items-center gap-3 px-8 py-4 group">
+            <span class="font-black text-black text-base">Get Help →</span>
+          </button>
+
+          <a href="https://wa.me/918368631300?text=Hi%20Claimo%20Team%2C%20my%20refund%20got%20cancelled%20and%20I%20need%20assistance." target="_blank" rel="noopener noreferrer" class="btn-secondary-link flex items-center gap-2.5 text-white font-bold px-6 py-4 rounded-full border border-white/20 hover:border-[#25D366] transition-all bg-black/50 backdrop-blur-md">
+            <span class="text-[#25D366] text-base">💬</span>
+            <span>WhatsApp: +91 8368631300</span>
+          </a>
+        </div>
+
+        <!-- Scroll down indicator -->
+        <a href="#shopping-wrong" class="pt-6 text-xs text-white/60 hover:text-accent font-mono flex flex-col items-center gap-2 transition-colors group">
+          <span>Explore how Claimo works</span>
+          <svg class="w-4 h-4 text-accent animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </a>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION 2: WHEN SHOPPING GOES WRONG (With Damaged Package Visual) -->
+    <!-- ========================================== -->
+    <section class="py-28 px-6 relative overflow-hidden" id="shopping-wrong">
+      <div class="max-w-4xl mx-auto text-center space-y-4 mb-16">
+        <span class="text-xs font-black tracking-widest uppercase text-accent/80">THE CONSUMER TRAP</span>
+        <h2 class="text-4xl sm:text-6xl font-black text-white tracking-tight leading-tight">
+          Everything was fine.<br>
+          <span class="text-white/40">Until it wasn't.</span>
+        </h2>
+      </div>
+
+      <!-- Grid with Photo Evidence Visual + Interactive Animated Timeline -->
+      <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <!-- Left: Dramatic Damaged Parcel Photo -->
+        <div class="lg:col-span-5 relative rounded-3xl overflow-hidden border border-white/15 shadow-2xl group">
+          <img src="assets/damaged-package.jpg" alt="Damaged parcel dispute rejection" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
+          
+          <div class="absolute bottom-5 left-5 right-5 p-4 rounded-2xl bg-[#12151B]/90 border border-white/15 backdrop-blur-md flex items-center justify-between">
+            <div>
+              <div class="text-xs font-mono text-rose-400 font-bold uppercase">Status Update</div>
+              <div class="text-sm font-black text-white">Claim Rejected by Seller</div>
+            </div>
+            <span class="text-2xl">⚠️</span>
+          </div>
+        </div>
+
+        <!-- Right: Animated Interactive Timeline -->
+        <div class="lg:col-span-7">
+          <div class="relative bg-[#0E1116] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl">
+            
+            <!-- Timeline Track Line -->
+            <div class="timeline-track absolute left-10 sm:left-12 top-10 bottom-10 w-0.5 bg-gradient-to-b from-accent via-accent/50 to-rose-500" aria-hidden="true"></div>
+
+            <div class="space-y-6 relative z-10">
+              
+              <!-- Step 1: ORDER PLACED -->
+              <div class="timeline-step flex items-start gap-4 sm:gap-5 group">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-accent/20 border border-accent flex items-center justify-center text-accent shrink-0 shadow-lg shadow-accent/20">
+                  <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8.5l3.5 3.5L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div class="flex-1 pt-0.5">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-sm sm:text-base font-bold text-white">ORDER PLACED</h3>
+                    <span class="text-xs font-mono text-accent">✓ Done</span>
+                  </div>
+                  <p class="text-xs text-white/50 mt-0.5">Instant payment deducted. Order confirmed.</p>
+                </div>
+              </div>
+
+              <!-- Step 2: DELIVERED -->
+              <div class="timeline-step flex items-start gap-4 sm:gap-5 group">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-accent/20 border border-accent flex items-center justify-center text-accent shrink-0 shadow-lg shadow-accent/20">
+                  <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8.5l3.5 3.5L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div class="flex-1 pt-0.5">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-sm sm:text-base font-bold text-white">DELIVERED</h3>
+                    <span class="text-xs font-mono text-accent">✓ Received</span>
+                  </div>
+                  <p class="text-xs text-white/50 mt-0.5">Package arrives damaged, wrong, or defective.</p>
+                </div>
+              </div>
+
+              <!-- Step 3: RETURN REQUESTED -->
+              <div class="timeline-step flex items-start gap-4 sm:gap-5 group">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-accent/20 border border-accent flex items-center justify-center text-accent shrink-0 shadow-lg shadow-accent/20">
+                  <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8.5l3.5 3.5L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div class="flex-1 pt-0.5">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-sm sm:text-base font-bold text-white">RETURN REQUESTED</h3>
+                    <span class="text-xs font-mono text-accent">✓ Submitted</span>
+                  </div>
+                  <p class="text-xs text-white/50 mt-0.5">Photos uploaded within the eligible return window.</p>
+                </div>
+              </div>
+
+              <!-- Step 4: REFUND REJECTED (Pulsing) -->
+              <div class="timeline-step timeline-step-pulsing flex items-start gap-4 sm:gap-5 relative">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-rose-500/20 border-2 border-rose-500 flex items-center justify-center text-rose-400 shrink-0 shadow-xl shadow-rose-900/50 animate-pulse">
+                  <svg class="w-4 h-4" viewBox="0 0 16 16" fill="none">
+                    <path d="M4 4l8 8M12 4L4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div class="flex-1 p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/30">
+                  <div class="flex items-center justify-between flex-wrap gap-2">
+                    <h3 class="text-sm sm:text-base font-black text-rose-400 tracking-wide">REFUND REJECTED</h3>
+                    <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold animate-pulse">✕ STUCK</span>
+                  </div>
+                  <p class="text-xs text-white/80 mt-1 font-medium">
+                    "Refund of ₹4,999 rejected by seller. Support ticket closed."
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Prompt: What Now? -->
+            <div class="mt-6 pt-5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white/5 p-4 rounded-2xl">
+              <div class="flex items-center gap-3">
+                <span class="text-2xl">🤔</span>
+                <div>
+                  <div class="text-sm font-black text-white">What now?</div>
+                  <div class="text-xs text-white/60">Don't let your refund get abandoned.</div>
+                </div>
+              </div>
+              <button class="btn-cta-primary open-case-modal w-full sm:w-auto px-6 py-2.5 text-xs font-black flex items-center justify-center gap-2">
+                <span>Ask Claimo</span>
+                <span>→</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION 3: PROBLEMS WE HANDLE -->
+    <!-- ========================================== -->
+    <section class="py-24 px-6 relative" id="problems">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div>
+            <span class="text-xs font-bold tracking-widest uppercase text-accent/80">CATEGORIES</span>
+            <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight mt-1">
+              What's gone wrong?
+            </h2>
+          </div>
+          <p class="text-sm text-white/50 max-w-sm">
+            Select your issue to see how Claimo assists in taking it forward.
+          </p>
+        </div>
+
+        <!-- Horizontal Draggable / Scrollable Cards Grid -->
+        <div class="problems-carousel grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4" id="problemsGrid">
+          
+          <!-- Card 1: REFUND -->
+          <div class="problem-card group p-6 rounded-3xl bg-[#111418] border border-white/10 hover:border-accent/50 transition-all duration-300 flex flex-col justify-between cursor-pointer relative overflow-hidden" data-problem="Refund">
+            <div class="space-y-4">
+              <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-accent group-hover:scale-110 group-hover:bg-accent/10 transition-transform">
+                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M12 7v10M9 10h6a2 2 0 010 4H9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <span class="text-[11px] font-mono tracking-widest text-accent uppercase font-bold">REFUND</span>
+                <h3 class="text-lg font-bold text-white mt-1">Still waiting for your money?</h3>
+              </div>
+            </div>
+            
+            <div class="card-hover-drawer mt-6 pt-4 border-t border-white/10">
+              <div class="text-xs text-white/70 mb-3">Claimo can help you take this forward.</div>
+              <button class="open-case-modal text-xs font-black text-accent flex items-center gap-1 group-hover:gap-2 transition-all" data-category="Refund not received">
+                <span>Start a case</span>
+                <span>→</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2: RETURN -->
+          <div class="problem-card group p-6 rounded-3xl bg-[#111418] border border-white/10 hover:border-accent/50 transition-all duration-300 flex flex-col justify-between cursor-pointer relative overflow-hidden" data-problem="Return">
+            <div class="space-y-4">
+              <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-accent group-hover:scale-110 group-hover:bg-accent/10 transition-transform">
+                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 12v-2a8 8 0 0115.3-3.3M20 12v2a8 8 0 01-15.3 3.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M4 6l0 4 4 0M20 18l0-4-4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <span class="text-[11px] font-mono tracking-widest text-accent uppercase font-bold">RETURN</span>
+                <h3 class="text-lg font-bold text-white mt-1">Return rejected?</h3>
+              </div>
+            </div>
+            
+            <div class="card-hover-drawer mt-6 pt-4 border-t border-white/10">
+              <div class="text-xs text-white/70 mb-3">Claimo can help you take this forward.</div>
+              <button class="open-case-modal text-xs font-black text-accent flex items-center gap-1 group-hover:gap-2 transition-all" data-category="Return rejected">
+                <span>Start a case</span>
+                <span>→</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 3: DELIVERY -->
+          <div class="problem-card group p-6 rounded-3xl bg-[#111418] border border-white/10 hover:border-accent/50 transition-all duration-300 flex flex-col justify-between cursor-pointer relative overflow-hidden" data-problem="Delivery">
+            <div class="space-y-4">
+              <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-accent group-hover:scale-110 group-hover:bg-accent/10 transition-transform">
+                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none">
+                  <rect x="3" y="6" width="18" height="12" rx="3" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M3 10h18M8 18v2M16 18v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <span class="text-[11px] font-mono tracking-widest text-accent uppercase font-bold">DELIVERY</span>
+                <h3 class="text-lg font-bold text-white mt-1">Order never arrived?</h3>
+              </div>
+            </div>
+            
+            <div class="card-hover-drawer mt-6 pt-4 border-t border-white/10">
+              <div class="text-xs text-white/70 mb-3">Claimo can help you take this forward.</div>
+              <button class="open-case-modal text-xs font-black text-accent flex items-center gap-1 group-hover:gap-2 transition-all" data-category="Order not delivered">
+                <span>Start a case</span>
+                <span>→</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 4: WRONG ITEM -->
+          <div class="problem-card group p-6 rounded-3xl bg-[#111418] border border-white/10 hover:border-accent/50 transition-all duration-300 flex flex-col justify-between cursor-pointer relative overflow-hidden" data-problem="WrongItem">
+            <div class="space-y-4">
+              <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-accent group-hover:scale-110 group-hover:bg-accent/10 transition-transform">
+                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none">
+                  <path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <span class="text-[11px] font-mono tracking-widest text-accent uppercase font-bold">WRONG ITEM</span>
+                <h3 class="text-lg font-bold text-white mt-1">Not what you ordered?</h3>
+              </div>
+            </div>
+            
+            <div class="card-hover-drawer mt-6 pt-4 border-t border-white/10">
+              <div class="text-xs text-white/70 mb-3">Claimo can help you take this forward.</div>
+              <button class="open-case-modal text-xs font-black text-accent flex items-center gap-1 group-hover:gap-2 transition-all" data-category="Wrong item delivered">
+                <span>Start a case</span>
+                <span>→</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 5: DAMAGED -->
+          <div class="problem-card group p-6 rounded-3xl bg-[#111418] border border-white/10 hover:border-accent/50 transition-all duration-300 flex flex-col justify-between cursor-pointer relative overflow-hidden" data-problem="Damaged">
+            <div class="space-y-4">
+              <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-accent group-hover:scale-110 group-hover:bg-accent/10 transition-transform">
+                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M12 8l-3 4 5 2-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <span class="text-[11px] font-mono tracking-widest text-accent uppercase font-bold">DAMAGED</span>
+                <h3 class="text-lg font-bold text-white mt-1">Arrived damaged?</h3>
+              </div>
+            </div>
+            
+            <div class="card-hover-drawer mt-6 pt-4 border-t border-white/10">
+              <div class="text-xs text-white/70 mb-3">Claimo can help you take this forward.</div>
+              <button class="open-case-modal text-xs font-black text-accent flex items-center gap-1 group-hover:gap-2 transition-all" data-category="Damaged / Defective item">
+                <span>Start a case</span>
+                <span>→</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION 4: HOW CLAIMO WORKS (Phone Journey) -->
+    <!-- ========================================== -->
+    <section class="py-28 px-6 relative overflow-hidden bg-gradient-to-b from-transparent via-[#0B0D11] to-transparent" id="how-it-works">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="text-center space-y-4 mb-16">
+          <span class="text-xs font-bold tracking-widest uppercase text-accent/80">PRODUCT DEMONSTRATION</span>
+          <h2 class="text-4xl sm:text-6xl font-black text-white tracking-tight">
+            Just show us what happened.
+          </h2>
+          <p class="text-base text-white/60 max-w-md mx-auto">
+            Watch how a grievance transforms into an organized escalation.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Interactive State Step Selector Controls -->
+          <div class="lg:col-span-5 space-y-3 order-2 lg:order-1">
+            
+            <button class="journey-step-btn active w-full text-left p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-accent/40 transition-all duration-300 flex items-start gap-4" data-state="1">
+              <span class="step-num w-7 h-7 rounded-full bg-accent text-black font-black text-xs flex items-center justify-center shrink-0">1</span>
+              <div>
+                <h3 class="text-sm font-bold text-white">State your problem</h3>
+                <p class="text-xs text-white/50 mt-0.5">"My ₹8,499 refund hasn't arrived."</p>
+              </div>
+            </button>
+
+            <button class="journey-step-btn w-full text-left p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-accent/40 transition-all duration-300 flex items-start gap-4" data-state="2">
+              <span class="step-num w-7 h-7 rounded-full bg-white/10 text-white/70 font-black text-xs flex items-center justify-center shrink-0">2</span>
+              <div>
+                <h3 class="text-sm font-bold text-white">Instant Claimo Intake</h3>
+                <p class="text-xs text-white/50 mt-0.5">"Send your order details & conversation."</p>
+              </div>
+            </button>
+
+            <button class="journey-step-btn w-full text-left p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-accent/40 transition-all duration-300 flex items-start gap-4" data-state="3">
+              <span class="step-num w-7 h-7 rounded-full bg-white/10 text-white/70 font-black text-xs flex items-center justify-center shrink-0">3</span>
+              <div>
+                <h3 class="text-sm font-bold text-white">Attach Evidence</h3>
+                <p class="text-xs text-white/50 mt-0.5">Invoice.pdf, Order.png, Chat.png</p>
+              </div>
+            </button>
+
+            <button class="journey-step-btn w-full text-left p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-accent/40 transition-all duration-300 flex items-start gap-4" data-state="4">
+              <span class="step-num w-7 h-7 rounded-full bg-white/10 text-white/70 font-black text-xs flex items-center justify-center shrink-0">4</span>
+              <div>
+                <h3 class="text-sm font-bold text-white">Case Synthesis</h3>
+                <p class="text-xs text-white/50 mt-0.5">Case understood. Escalation prepared.</p>
+              </div>
+            </button>
+
+            <button class="journey-step-btn w-full text-left p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-accent/40 transition-all duration-300 flex items-start gap-4" data-state="5">
+              <span class="step-num w-7 h-7 rounded-full bg-white/10 text-white/70 font-black text-xs flex items-center justify-center shrink-0">5</span>
+              <div>
+                <h3 class="text-sm font-bold text-white">Live Progress Pipeline</h3>
+                <p class="text-xs text-white/50 mt-0.5">Understanding → Evidence → Escalation → Follow-up</p>
+              </div>
+            </button>
+
+          </div>
+
+          <!-- Giant Interactive Smartphone Journey Centerpiece -->
+          <div class="lg:col-span-7 flex justify-center order-1 lg:order-2">
+            <div class="phone-journey-frame relative w-full max-w-[370px] sm:max-w-[410px] aspect-[9/18] rounded-[52px] p-4 bg-[#14171D] border-2 border-white/20 shadow-2xl shadow-black backdrop-blur-2xl">
+              
+              <!-- Dynamic Island -->
+              <div class="absolute top-6 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-full z-30 flex items-center justify-between px-3">
+                <div class="w-2.5 h-2.5 rounded-full bg-[#1A1A1A]"></div>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[9px] font-mono text-accent">CLAIM·O</span>
+                  <div class="w-1.5 h-1.5 rounded-full bg-accent animate-ping"></div>
+                </div>
+              </div>
+
+              <!-- Phone Screen Content -->
+              <div class="phone-journey-screen relative w-full h-full rounded-[42px] overflow-hidden bg-[#090B0E] border border-white/5 p-5 pt-16 flex flex-col justify-between" id="journeyScreen">
+                
+                <!-- Screen Header -->
+                <div class="flex items-center justify-between pb-3 border-b border-white/10">
+                  <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-accent/10 border border-accent/30 flex items-center justify-center text-accent font-bold text-xs">
+                      C
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-white">Claimo Assistant</div>
+                      <div class="text-[10px] text-accent font-mono">● Grievance Active</div>
+                    </div>
+                  </div>
+                  <span class="text-[11px] font-mono text-white/40">Case #CLM-208</span>
+                </div>
+
+                <!-- Chat & Artifact Area -->
+                <div class="journey-chat-body flex-1 py-4 space-y-3.5 overflow-y-auto no-scrollbar flex flex-col justify-end" id="journeyChatBody">
+                  
+                  <!-- Message: User State 1 -->
+                  <div class="chat-bubble user-msg ml-auto max-w-[85%] p-3.5 rounded-2xl rounded-tr-sm bg-accent text-black font-semibold text-xs shadow-md">
+                    "My ₹8,499 refund hasn't arrived from the seller."
+                  </div>
+
+                  <!-- Message: Claimo State 2 -->
+                  <div class="chat-bubble claimo-msg mr-auto max-w-[88%] p-3.5 rounded-2xl rounded-tl-sm bg-[#181C22] border border-white/10 text-white text-xs space-y-1 shadow-md" id="chatMsg2">
+                    <div class="text-[10px] text-accent font-bold">CLAIMO RESPONSE</div>
+                    <p>"Got it. Send your order details and previous conversation."</p>
+                  </div>
+
+                  <!-- Message: Evidence Files State 3 -->
+                  <div class="chat-files-row grid grid-cols-3 gap-2 pt-1" id="chatFilesRow">
+                    <div class="file-badge p-2 rounded-xl bg-white/5 border border-white/10 text-center space-y-1">
+                      <div class="text-base">📄</div>
+                      <div class="text-[9px] font-mono text-white/80 truncate">Invoice.pdf</div>
+                    </div>
+                    <div class="file-badge p-2 rounded-xl bg-white/5 border border-white/10 text-center space-y-1">
+                      <div class="text-base">🖼️</div>
+                      <div class="text-[9px] font-mono text-white/80 truncate">Order.png</div>
+                    </div>
+                    <div class="file-badge p-2 rounded-xl bg-white/5 border border-white/10 text-center space-y-1">
+                      <div class="text-base">💬</div>
+                      <div class="text-[9px] font-mono text-white/80 truncate">Chat.png</div>
+                    </div>
+                  </div>
+
+                  <!-- Message: Synthesis Card State 4 -->
+                  <div class="case-synthesis-card p-3.5 rounded-2xl bg-[#0E1B14] border border-accent/30 space-y-2" id="chatSynthesisCard">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-bold text-accent uppercase tracking-wider">Case understood ✓</span>
+                      <span class="text-[10px] font-mono text-white/40">Ready</span>
+                    </div>
+                    <div class="text-xs text-white font-medium">
+                      <span class="text-white/50">Complaint:</span> Refund not received (₹8,499)
+                    </div>
+                    <div class="text-xs text-accent font-bold flex items-center gap-1.5">
+                      <span>Next step:</span> Prepare escalation
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- Bottom Progress Pipeline State 5 -->
+                <div class="journey-progress-footer pt-3 border-t border-white/10" id="journeyProgressFooter">
+                  <div class="text-[10px] font-mono text-white/40 mb-2 flex items-center justify-between">
+                    <span>DISPUTE PIPELINE</span>
+                    <span class="text-accent font-bold">STEP 3 OF 4</span>
+                  </div>
+                  <div class="grid grid-cols-4 gap-1 text-[10px] text-center font-bold">
+                    <div class="p-1.5 rounded-lg bg-accent/20 text-accent border border-accent/30">
+                      Understood ✓
+                    </div>
+                    <div class="p-1.5 rounded-lg bg-accent/20 text-accent border border-accent/30">
+                      Evidence ✓
+                    </div>
+                    <div class="p-1.5 rounded-lg bg-accent text-black animate-pulse font-black">
+                      Escalate →
+                    </div>
+                    <div class="p-1.5 rounded-lg bg-white/5 text-white/40 border border-white/5">
+                      Follow-up ○
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION 5: NO MORE CHASING -->
+    <!-- ========================================== -->
+    <section class="py-28 px-6 relative overflow-hidden bg-black/60" id="no-more-chasing">
+      <div class="max-w-6xl mx-auto">
+        
+        <div class="text-center space-y-3 mb-16">
+          <span class="text-xs font-bold tracking-widest uppercase text-accent/80">THE ENDLESS LOOP IS OVER</span>
+          <h2 class="text-4xl sm:text-6xl font-black text-white tracking-tight">
+            No more chasing.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <!-- LEFT: The Ping-Pong Customer Care Chaos -->
+          <div class="lg:col-span-6 relative p-6 sm:p-8 rounded-3xl bg-[#111317] border border-rose-500/20 shadow-2xl overflow-hidden">
+            <div class="flex items-center justify-between mb-6 pb-3 border-b border-white/10">
+              <span class="text-xs font-mono font-bold text-rose-400 uppercase">Traditional Support Ping-Pong</span>
+              <span class="text-[11px] font-mono text-rose-500/80 animate-pulse">✕ Infinite Loop</span>
+            </div>
+
+            <!-- Stacking chaotic notification stack -->
+            <div class="space-y-3 relative" id="chaosStack">
+              
+              <div class="chaos-card p-3.5 rounded-2xl bg-[#1C1416] border border-rose-500/30 text-xs text-white/90 flex items-start gap-3 shadow-md">
+                <div class="w-5 h-5 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0 font-bold text-[10px]">1</div>
+                <div>
+                  <div class="font-bold text-rose-300">Customer Care</div>
+                  <div class="text-white/70">"Please wait 48 hours for an update."</div>
+                </div>
+              </div>
+
+              <div class="chaos-card p-3.5 rounded-2xl bg-[#1C1416] border border-rose-500/30 text-xs text-white/90 flex items-start gap-3 shadow-md">
+                <div class="w-5 h-5 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0 font-bold text-[10px]">2</div>
+                <div>
+                  <div class="font-bold text-rose-300">Customer Care</div>
+                  <div class="text-white/70">"Please contact the third-party seller directly."</div>
+                </div>
+              </div>
+
+              <div class="chaos-card p-3.5 rounded-2xl bg-[#1C1416] border border-rose-500/30 text-xs text-white/90 flex items-start gap-3 shadow-md">
+                <div class="w-5 h-5 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0 font-bold text-[10px]">3</div>
+                <div>
+                  <div class="font-bold text-rose-300">Seller Response</div>
+                  <div class="text-white/70">"We cannot assist. Please contact the platform."</div>
+                </div>
+              </div>
+
+              <div class="chaos-card p-3.5 rounded-2xl bg-[#1C1416] border border-rose-500/30 text-xs text-white/90 flex items-start gap-3 shadow-md">
+                <div class="w-5 h-5 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0 font-bold text-[10px]">4</div>
+                <div>
+                  <div class="font-bold text-rose-300">Platform System</div>
+                  <div class="text-white/70">"Ticket marked as resolved and closed."</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- RIGHT: The Claimo Structure -->
+          <div class="lg:col-span-6 relative p-6 sm:p-8 rounded-3xl bg-[#0D1512] border border-accent/30 shadow-2xl shadow-accent/5">
+            <div class="flex items-center justify-between mb-6 pb-3 border-b border-accent/20">
+              <div class="flex items-center gap-2">
+                <div class="w-2.5 h-2.5 rounded-full bg-accent animate-ping"></div>
+                <span class="text-xs font-mono font-bold text-accent uppercase">The Claimo Route</span>
+              </div>
+              <span class="text-xs font-bold text-white">Let's take it from here.</span>
+            </div>
+
+            <!-- Structured steps -->
+            <div class="space-y-4">
+              
+              <div class="p-4 rounded-2xl bg-white/5 border border-accent/30 flex items-center justify-between group hover:border-accent transition-all">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-8 h-8 rounded-full bg-accent text-black flex items-center justify-center font-black text-xs">
+                    ✓
+                  </div>
+                  <div>
+                    <div class="text-sm font-bold text-white">CASE CREATED</div>
+                    <div class="text-xs text-white/50">Grievance recorded with timeline & facts.</div>
+                  </div>
+                </div>
+                <span class="text-xs font-mono text-accent">Done</span>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-white/5 border border-accent/30 flex items-center justify-between group hover:border-accent transition-all">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-8 h-8 rounded-full bg-accent text-black flex items-center justify-center font-black text-xs">
+                    ✓
+                  </div>
+                  <div>
+                    <div class="text-sm font-bold text-white">EVIDENCE ORGANIZED</div>
+                    <div class="text-xs text-white/50">Invoices, photos, and chats collated into a dispute dossier.</div>
+                  </div>
+                </div>
+                <span class="text-xs font-mono text-accent">Done</span>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-white/5 border border-accent/30 flex items-center justify-between group hover:border-accent transition-all">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-8 h-8 rounded-full bg-accent text-black flex items-center justify-center font-black text-xs">
+                    ✓
+                  </div>
+                  <div>
+                    <div class="text-sm font-bold text-white">NEXT STEP IDENTIFIED</div>
+                    <div class="text-xs text-white/50">Exact escalation pathway drafted & guided.</div>
+                  </div>
+                </div>
+                <span class="text-xs font-mono text-accent">Done</span>
+              </div>
+
+            </div>
+
+            <div class="mt-6 pt-4">
+              <button class="btn-cta-primary open-case-modal w-full py-3.5 text-center justify-center font-black text-sm">
+                Start with your complaint →
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION 6: PRICING -->
+    <!-- ========================================== -->
+    <section class="py-28 px-6 relative" id="pricing">
+      <div class="max-w-6xl mx-auto">
+        
+        <div class="text-center space-y-4 mb-16">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/30">
+            <span class="text-xs font-mono font-bold text-accent uppercase">Early-access pricing</span>
+          </div>
+          <h2 class="text-4xl sm:text-6xl font-black text-white tracking-tight leading-tight">
+            Start with your problem.<br>
+            <span class="text-white/60">Choose the help you need.</span>
+          </h2>
+        </div>
+
+        <!-- 3 Minimal Pricing Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+          
+          <!-- Option 1: CASE CHECK -->
+          <div class="pricing-card p-8 rounded-3xl bg-[#111317] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between">
+            <div class="space-y-6">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono uppercase tracking-widest text-white/60 font-bold">OPTION 01</span>
+                <span class="text-[11px] font-mono text-white/40 px-2 py-0.5 rounded bg-white/5">Self-Route</span>
+              </div>
+              <div>
+                <h3 class="text-2xl font-black text-white">CASE CHECK</h3>
+                <div class="mt-4 flex items-baseline gap-1">
+                  <span class="text-4xl font-black text-white">₹99</span>
+                  <span class="text-xs text-white/40 font-mono">one-time</span>
+                </div>
+              </div>
+              <p class="text-sm text-white/70 border-t border-white/10 pt-4">
+                "Know what to do next."
+              </p>
+            </div>
+            
+            <div class="mt-8 pt-4">
+              <button class="open-case-modal w-full py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs tracking-wider uppercase transition-colors" data-plan="Case Check - ₹99">
+                Choose Case Check
+              </button>
+            </div>
+          </div>
+
+          <!-- Option 2: RESOLUTION ASSIST (Featured) -->
+          <div class="pricing-card featured-pricing relative p-8 rounded-3xl bg-[#121A15] border-2 border-accent shadow-2xl shadow-accent/10 flex flex-col justify-between">
+            <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-accent text-black font-extrabold text-[10px] uppercase tracking-wider">
+              Most Popular
+            </div>
+
+            <div class="space-y-6">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono uppercase tracking-widest text-accent font-bold">OPTION 02</span>
+                <span class="text-[11px] font-mono text-accent px-2 py-0.5 rounded bg-accent/10 border border-accent/20">Assisted</span>
+              </div>
+              <div>
+                <h3 class="text-2xl font-black text-white">RESOLUTION ASSIST</h3>
+                <div class="mt-4 flex items-baseline gap-1">
+                  <span class="text-4xl font-black text-accent">₹299</span>
+                  <span class="text-xs text-white/40 font-mono">one-time</span>
+                </div>
+              </div>
+              <p class="text-sm text-white/90 border-t border-accent/20 pt-4 font-medium">
+                "Get help preparing and taking forward your complaint."
+              </p>
+            </div>
+            
+            <div class="mt-8 pt-4">
+              <button class="btn-cta-primary open-case-modal w-full py-3.5 rounded-full text-black font-black text-xs tracking-wider uppercase justify-center" data-plan="Resolution Assist - ₹299">
+                Choose Resolution Assist
+              </button>
+            </div>
+          </div>
+
+          <!-- Option 3: CONCIERGE -->
+          <div class="pricing-card p-8 rounded-3xl bg-[#111317] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between">
+            <div class="space-y-6">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-mono uppercase tracking-widest text-white/60 font-bold">OPTION 03</span>
+                <span class="text-[11px] font-mono text-white/40 px-2 py-0.5 rounded bg-white/5">Full Escalation</span>
+              </div>
+              <div>
+                <h3 class="text-2xl font-black text-white">CONCIERGE</h3>
+                <div class="mt-4 flex items-baseline gap-1">
+                  <span class="text-4xl font-black text-white">₹799</span>
+                  <span class="text-xs text-white/40 font-mono">one-time</span>
+                </div>
+              </div>
+              <p class="text-sm text-white/70 border-t border-white/10 pt-4">
+                "Get continued assistance and follow-up guidance."
+              </p>
+            </div>
+            
+            <div class="mt-8 pt-4">
+              <button class="open-case-modal w-full py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs tracking-wider uppercase transition-colors" data-plan="Concierge - ₹799">
+                Choose Concierge
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION 7: WHY CLAIMO (Chaos to One Word) -->
+    <!-- ========================================== -->
+    <section class="py-32 px-6 relative overflow-hidden bg-black" id="why-claimo">
+      <div class="max-w-5xl mx-auto text-center relative z-10">
+        
+        <!-- Giant Statement -->
+        <h2 class="text-3xl sm:text-6xl font-black text-white tracking-tight max-w-3xl mx-auto leading-tight mb-16">
+          You already have enough things to chase.
+        </h2>
+
+        <!-- Kinetic Floating Words Arena -->
+        <div class="kinetic-arena relative h-64 sm:h-72 w-full flex items-center justify-center my-6" id="kineticArena">
+          
+          <!-- Orbiting Chaos Badges -->
+          <div class="floating-tag chaos-badge tag-1 absolute top-4 left-4 sm:left-16 px-4 py-2 rounded-full bg-white/10 border border-white/15 text-white/70 font-mono text-sm">
+            Refund
+          </div>
+          <div class="floating-tag chaos-badge tag-2 absolute top-6 right-6 sm:right-20 px-4 py-2 rounded-full bg-white/10 border border-white/15 text-white/70 font-mono text-sm">
+            Return
+          </div>
+          <div class="floating-tag chaos-badge tag-3 absolute bottom-8 left-8 sm:left-24 px-4 py-2 rounded-full bg-white/10 border border-white/15 text-white/70 font-mono text-sm">
+            Seller
+          </div>
+          <div class="floating-tag chaos-badge tag-4 absolute bottom-6 right-8 sm:right-28 px-4 py-2 rounded-full bg-white/10 border border-white/15 text-white/70 font-mono text-sm">
+            Customer Care
+          </div>
+          <div class="floating-tag chaos-badge tag-5 absolute top-1/2 left-2 sm:left-8 -translate-y-1/2 px-4 py-2 rounded-full bg-white/10 border border-white/15 text-white/70 font-mono text-sm">
+            Tracking
+          </div>
+          <div class="floating-tag chaos-badge tag-6 absolute top-1/2 right-2 sm:right-10 -translate-y-1/2 px-4 py-2 rounded-full bg-white/10 border border-white/15 text-white/70 font-mono text-sm">
+            Screenshots
+          </div>
+
+          <!-- Central Converged Word -->
+          <div class="converged-container flex flex-col items-center justify-center transition-all duration-700" id="convergedContainer">
+            <div class="text-5xl sm:text-8xl font-black tracking-widest text-white glow-text" id="claimoCollapsedWord">
+              CLAIM<span class="text-accent">O.</span>
+            </div>
+            <p class="text-sm sm:text-lg text-accent font-bold mt-4 tracking-wide">
+              One place to take your complaint forward.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="pt-8 flex justify-center">
+          <button class="btn-cta-primary open-case-modal px-8 py-4 font-black text-sm flex items-center gap-2">
+            <span>Tell Claimo what happened</span>
+            <span>→</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION 8: FINAL CTA -->
+    <!-- ========================================== -->
+    <section class="py-32 px-6 relative overflow-hidden bg-gradient-to-b from-black via-[#0D1217] to-[#08090A]" id="final-cta">
+      
+      <!-- Glowing background burst -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[140px] pointer-events-none" aria-hidden="true"></div>
+
+      <div class="max-w-4xl mx-auto text-center relative z-10 space-y-8">
+        
+        <!-- Floating notification banner -->
+        <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-[#111A15] border border-accent/40 shadow-xl animate-bounce-subtle">
+          <div class="w-2 h-2 rounded-full bg-accent animate-ping"></div>
+          <span class="text-xs font-bold text-accent">Your case is ready.</span>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-5xl sm:text-7xl font-black text-white tracking-tight leading-none">
+            Got a complaint?
+          </h2>
+          <p class="text-2xl sm:text-4xl font-black text-white/80">
+            Send it to Claimo.
+          </p>
+        </div>
+
+        <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button class="btn-cta-hero open-case-modal inline-flex items-center gap-3 px-10 py-5 text-base sm:text-lg font-black group">
+            <span class="text-black">Get Help</span>
+            <span class="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center transform group-hover:translate-x-1 transition-transform">
+              <svg class="w-5 h-5 text-black" viewBox="0 0 16 16" fill="none">
+                <path d="M3.3 8h9.4M8.7 3.3L13.4 8l-4.7 4.7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+
+          <a href="https://wa.me/918368631300?text=Hi%20Claimo%2C%20I%20have%20an%20e-commerce%20grievance%20ready%20to%20send." target="_blank" rel="noopener noreferrer" class="px-8 py-5 rounded-full bg-[#25D366]/20 border border-[#25D366]/50 text-[#25D366] font-black text-base hover:bg-[#25D366] hover:text-black transition-all flex items-center gap-2">
+            <span>Direct WhatsApp</span>
+            <span>→</span>
+          </a>
+        </div>
+
+        <p class="text-xs sm:text-sm text-white/40 tracking-wider pt-2 font-medium">
+          Refunds · Returns · Delivery · Wrong/Damaged Products
+        </p>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- FOOTER -->
+  <!-- ========================================== -->
+  <footer class="border-t border-white/10 bg-[#08090A] py-16 px-6 relative z-10 text-white/60 text-xs">
+    <div class="max-w-7xl mx-auto space-y-12">
+      
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-white/5">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="font-black text-lg text-white tracking-wider">CLAIM<span class="text-accent">O</span></span>
+          </div>
+          <p class="text-white/50 text-xs">
+            Consumer grievance assistance for e-commerce.
+          </p>
+          <div class="mt-3 flex flex-wrap items-center gap-4 text-xs font-mono text-white/70">
+            <a href="tel:+918368631300" class="hover:text-accent flex items-center gap-1">📞 +91 8368631300</a>
+            <span>·</span>
+            <a href="mailto:maheshwarimanya472@gmail.com" class="hover:text-accent flex items-center gap-1">✉️ maheshwarimanya472@gmail.com</a>
+          </div>
+        </div>
+
+        <!-- Links -->
+        <div class="flex flex-wrap items-center gap-6 font-semibold text-white/70">
+          <a href="#how-it-works" class="hover:text-white transition-colors">How it works</a>
+          <a href="#problems" class="hover:text-white transition-colors">What we handle</a>
+          <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+          <a href="https://wa.me/918368631300" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">WhatsApp Direct</a>
+          <a href="mailto:maheshwarimanya472@gmail.com" class="hover:text-white transition-colors">Email Support</a>
+          <a href="#privacy" class="hover:text-white transition-colors">Privacy</a>
+          <a href="#terms" class="hover:text-white transition-colors">Terms</a>
+        </div>
+
+        <!-- Social -->
+        <div class="flex items-center gap-4">
+          <a href="#" class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:text-white hover:border-white/30 transition-all" aria-label="Instagram">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.13-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:text-white hover:border-white/30 transition-all" aria-label="LinkedIn">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Legal Disclaimer -->
+      <div class="text-[11px] text-white/40 leading-relaxed max-w-4xl">
+        <p>
+          Claimo is an independent consumer grievance assistance service. We are not affiliated with any e-commerce platform or government authority. We do not guarantee a particular outcome.
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ========================================== -->
+  <!-- INTERACTIVE CASE INTAKE MODAL (Connected to WhatsApp & Email) -->
+  <!-- ========================================== -->
+  <div class="case-modal-backdrop fixed inset-0 z-50 bg-black/85 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4" id="caseModal">
+    <div class="case-modal-container relative w-full max-w-lg rounded-3xl bg-[#0F1216] border-2 border-white/20 p-6 sm:p-8 shadow-2xl scale-95 transition-transform duration-300 max-h-[90vh] overflow-y-auto">
+      
+      <!-- Close button -->
+      <button class="modal-close-btn absolute top-5 right-5 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors" id="closeModalBtn" aria-label="Close modal">
+        ✕
+      </button>
+
+      <!-- Modal Header -->
+      <div class="mb-6 space-y-1">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-[#25D366] animate-ping"></span>
+          <span class="text-[10px] font-mono font-bold tracking-widest text-[#25D366] uppercase">Instant WhatsApp & Email Escalation</span>
+        </div>
+        <h3 class="text-2xl font-black text-white">Tell Claimo what happened</h3>
+        <p class="text-xs text-white/60">Submitting will route your case directly to our grievance desk via WhatsApp & Email.</p>
+      </div>
+
+      <!-- Interactive Form -->
+      <form id="caseIntakeForm" class="space-y-4" onsubmit="event.preventDefault(); window.handleCaseSubmit();">
+        
+        <!-- Step 1: Issue Type -->
+        <div>
+          <label class="block text-xs font-bold text-white/90 mb-1.5">1. What went wrong?</label>
+          <select id="issueSelect" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:outline-none focus:border-accent transition-colors" required>
+            <option value="" class="bg-[#0F1216]">Select an issue...</option>
+            <option value="Refund not received" class="bg-[#0F1216]">Refund not received</option>
+            <option value="Return rejected" class="bg-[#0F1216]">Return rejected</option>
+            <option value="Order not delivered" class="bg-[#0F1216]">Order not delivered</option>
+            <option value="Wrong item delivered" class="bg-[#0F1216]">Wrong item delivered</option>
+            <option value="Damaged / Defective item" class="bg-[#0F1216]">Damaged / Defective item</option>
+            <option value="Customer Care refused resolution" class="bg-[#0F1216]">Customer Care refused resolution</option>
+          </select>
+        </div>
+
+        <!-- Step 2: Platform & Approximate Amount -->
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-white/90 mb-1.5">2. Platform</label>
+            <input type="text" id="platformInput" placeholder="Flipkart, Amazon, Myntra..." class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:outline-none focus:border-accent placeholder-white/30" required>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-white/90 mb-1.5">3. Disputed Amount (₹)</label>
+            <input type="number" id="amountInput" placeholder="e.g. 4999" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:outline-none focus:border-accent placeholder-white/30" required>
+          </div>
+        </div>
+
+        <!-- Step 3: Brief Details -->
+        <div>
+          <label class="block text-xs font-bold text-white/90 mb-1.5">4. Brief summary (1-2 sentences)</label>
+          <textarea id="noteInput" rows="2" placeholder="e.g. Return was rejected citing policy, but parcel was damaged on arrival." class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:outline-none focus:border-accent placeholder-white/30 resize-none"></textarea>
+        </div>
+
+        <!-- Step 4: Your Name / Contact -->
+        <div>
+          <label class="block text-xs font-bold text-white/90 mb-1.5">5. Your Name / Mobile Number</label>
+          <input type="text" id="contactInput" placeholder="Your name or phone number" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:outline-none focus:border-accent placeholder-white/30" required>
+        </div>
+
+        <!-- Drag & Drop Evidence Mockup -->
+        <div>
+          <label class="block text-xs font-bold text-white/90 mb-1.5">6. Attach screenshots / invoices (Optional)</label>
+          <div class="p-3.5 rounded-xl border border-dashed border-white/20 bg-white/[0.02] text-center hover:border-accent/50 transition-colors cursor-pointer" id="dropZone">
+            <span class="text-base">📎</span>
+            <div class="text-xs text-white/70 font-medium mt-0.5">Click to select files (Invoices, chats, photos)</div>
+          </div>
+        </div>
+
+        <!-- Submit CTA Button -->
+        <div class="pt-2 flex flex-col gap-2">
+          <button type="submit" class="btn-cta-primary w-full py-4 text-center justify-center font-black text-sm bg-accent hover:bg-accent-glow text-black shadow-lg shadow-accent/25">
+            Submit Case & Send on WhatsApp (+91 8368631300) →
+          </button>
+          
+          <div class="text-center text-[10px] text-white/50">
+            Or direct email: <a href="mailto:maheshwarimanya472@gmail.com" class="text-white/80 underline hover:text-accent">maheshwarimanya472@gmail.com</a>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- Success Card (Shown after submit) -->
+      <div id="caseSuccessView" class="hidden text-center py-6 space-y-4">
+        <div class="w-16 h-16 rounded-full bg-[#25D366]/20 border-2 border-[#25D366] text-[#25D366] flex items-center justify-center mx-auto text-3xl animate-bounce">
+          ✓
+        </div>
+        <div>
+          <h4 class="text-2xl font-black text-white">Case Packet Prepared!</h4>
+          <p class="text-xs text-white/70 mt-1" id="caseSummaryText">
+            Routing case to Claimo desk...
+          </p>
+        </div>
+
+        <!-- Direct Action Buttons -->
+        <div class="p-4 rounded-2xl bg-[#141B17] border border-accent/30 text-left text-xs text-white/80 space-y-3">
+          <div class="text-accent font-bold">Direct Channels for Fast Resolution:</div>
+          
+          <a id="whatsappDirectLink" href="#" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-xl bg-[#25D366] text-black font-extrabold hover:brightness-110 transition-all">
+            <span class="flex items-center gap-2">
+              <span>💬</span>
+              <span>Open in WhatsApp (+91 8368631300)</span>
+            </span>
+            <span>→</span>
+          </a>
+
+          <a id="emailDirectLink" href="#" class="flex items-center justify-between p-3 rounded-xl bg-white/10 text-white font-bold hover:bg-white/20 transition-all">
+            <span class="flex items-center gap-2">
+              <span>✉️</span>
+              <span>Send to maheshwarimanya472@gmail.com</span>
+            </span>
+            <span>→</span>
+          </a>
+        </div>
+
+        <button class="btn-secondary-link w-full py-3 text-xs font-bold text-white/80 justify-center rounded-xl border border-white/15" onclick="window.resetModal()">
+          Close & Back to Claimo
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
