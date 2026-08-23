@@ -1,7 +1,10 @@
 name: Claimo form update
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'patch_claimo.py'
 
 permissions:
   contents: write
