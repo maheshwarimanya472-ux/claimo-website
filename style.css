@@ -709,3 +709,12 @@ body {
 .animate-pulse-slow {
   animation: pulseSlow 3.5s ease-in-out infinite;
 }
+
+
+/* Claimo targeted visual fix */
+.hero-center-headline, .hero-center-subline { color:#fff !important; text-shadow:0 2px 18px rgba(0,0,0,.9); }
+.hero-center-headline { font-weight:800 !important; }
+.top-hero-viewport > .relative.z-10 { padding-top:15rem !important; transform:translateX(-1.25rem) !important; }
+@media (min-width:768px){ .top-hero-viewport > .relative.z-10 { padding-top:18rem !important; transform:translateX(-2rem) !important; } }
+#avatarSpeechBubble { display:none !important; }
+#pricing .pricing-card .text-4xl, #pricing .pricing-card .text-5xl, #pricing .pricing-card .text-6xl { font-weight:900 !important; }
