@@ -732,3 +732,16 @@ body {
 #shopping-wrong { position:relative !important; }
 @media (min-width:1024px){ #shopping-wrong::before { content:""; position:absolute; left:5%; top:12rem; width:38%; height:28rem; background:linear-gradient(to top, rgba(7,9,11,.18), transparent 55%), url("damaged-package.jpg") center/cover no-repeat; border-radius:1.5rem; opacity:.98; box-shadow:0 20px 60px rgba(0,0,0,.35); pointer-events:none; z-index:0; } #shopping-wrong > * { position:relative; z-index:1; } }
 @media (max-width:1023px){ #shopping-wrong::before { content:""; display:block; width:100%; max-width:34rem; height:18rem; margin:0 auto 2rem; background:url("damaged-package.jpg") center/cover no-repeat; border-radius:1.5rem; box-shadow:0 20px 60px rgba(0,0,0,.35); } }
+
+
+/* Final Claimo visual cleanup */
+.hero-center-headline, .hero-center-subline { color:#fff !important; text-shadow:0 2px 18px rgba(0,0,0,.9); }
+.hero-center-headline { font-weight:800 !important; }
+.top-hero-viewport > .relative.z-10 { padding-top:15rem !important; transform:translateX(-1.5rem) !important; }
+@media (min-width:768px){ .top-hero-viewport > .relative.z-10 { padding-top:18rem !important; transform:translateX(-2.5rem) !important; } }
+#avatarGuideWidget { position:fixed !important; left:1.5rem !important; bottom:1.5rem !important; top:auto !important; right:auto !important; z-index:60 !important; }
+#avatarGuideWidget .avatar-trigger-btn { position:relative !important; }
+#avatarSpeechBubble { display:none !important; }
+#shopping-wrong .lg\:col-span-5 { min-height:28rem !important; }
+#shopping-wrong .lg\:col-span-5 > img { width:100% !important; height:28rem !important; object-fit:cover !important; object-position:center !important; display:block !important; }
+@media (max-width:1023px){ #shopping-wrong .lg\:col-span-5 > img { height:22rem !important; } }
