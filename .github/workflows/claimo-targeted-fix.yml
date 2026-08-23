@@ -22,7 +22,7 @@ jobs:
           p = Path('index.html')
           s = p.read_text()
 
-          # Remove Maya speech bubble only; keep Maya/avatar itself intact.
+          # Hide only the Maya speech bubble. Keep the Maya avatar image/button.
           s = re.sub(r'\s*<!-- Proactive Speech Bubble.*?</div>\s*', '\n', s, count=1, flags=re.S)
           s = re.sub(r'\s*<div[^>]*id="avatarSpeechBubble"[^>]*>.*?</div>\s*', '\n', s, count=1, flags=re.S)
 
@@ -38,7 +38,7 @@ jobs:
 
           css = Path('style.css')
           c = css.read_text()
-          c += '''\n\n/* Claimo targeted visual fix */\n.hero-center-headline, .hero-center-subline { color:#fff !important; text-shadow:0 2px 18px rgba(0,0,0,.9); }\n.hero-center-headline { font-weight:800 !important; }\n.top-hero-viewport > .relative.z-10 { padding-top:15rem !important; transform:translateX(-1.25rem) !important; }\n@media (min-width:768px){ .top-hero-viewport > .relative.z-10 { padding-top:18rem !important; transform:translateX(-2rem) !important; } }\n#avatarSpeechBubble { display:none !important; }\n#pricing .pricing-card .text-4xl, #pricing .pricing-card .text-5xl, #pricing .pricing-card .text-6xl { font-weight:900 !important; }\n'''
+          c += '''\n\n/* Claimo targeted visual fix */\n.hero-center-headline, .hero-center-subline { color:#fff !important; text-shadow:0 2px 18px rgba(0,0,0,.9); }\n.hero-center-headline { font-weight:800 !important; }\n.top-hero-viewport > .relative.z-10 { padding-top:15rem !important; transform:translateX(-1.25rem) !important; }\n@media (min-width:768px){ .top-hero-viewport > .relative.z-10 { padding-top:18rem !important; transform:translateX(-2rem) !important; } }\n#avatarSpeechBubble { display:none !important; }\n#avatarGuideWidget { position:fixed !important; left:1.5rem !important; bottom:1.5rem !important; top:auto !important; right:auto !important; z-index:60 !important; }\n#avatarGuideWidget > #avatarTriggerBtn { position:relative !important; left:auto !important; top:auto !important; }\n#pricing .pricing-card .text-4xl, #pricing .pricing-card .text-5xl, #pricing .pricing-card .text-6xl { font-weight:900 !important; }\n#shopping-wrong { position:relative !important; }\n@media (min-width:1024px){ #shopping-wrong::before { content:""; position:absolute; left:5%; top:12rem; width:38%; height:28rem; background:linear-gradient(to top, rgba(7,9,11,.18), transparent 55%), url("damaged-package.jpg") center/cover no-repeat; border-radius:1.5rem; opacity:.98; box-shadow:0 20px 60px rgba(0,0,0,.35); pointer-events:none; z-index:0; } #shopping-wrong > * { position:relative; z-index:1; } }\n@media (max-width:1023px){ #shopping-wrong::before { content:""; display:block; width:100%; max-width:34rem; height:18rem; margin:0 auto 2rem; background:url("damaged-package.jpg") center/cover no-repeat; border-radius:1.5rem; box-shadow:0 20px 60px rgba(0,0,0,.35); } }\n'''
           css.write_text(c)
           PY
       - name: Commit fix
@@ -46,5 +46,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html style.css
-          git diff --cached --quiet || git commit -m "Apply requested Claimo hero and pricing fix [claimo-fix]"
+          git diff --cached --quiet || git commit -m "Restore Maya and damaged parcel visual [claimo-fix]"
           git push
