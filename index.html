@@ -135,7 +135,7 @@
             <span class="text-accent">→</span>
           </button>
           <button class="avatar-quick-btn text-left p-2.5 rounded-xl bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/30 text-[#25D366] font-bold transition-all flex items-center justify-between" data-prompt="Direct WhatsApp Help">
-            <span>💬 Chat directly with specialist (+91 8368631300)</span>
+            <span>💬 Chat directly with specialist</span>
             <span>→</span>
           </button>
         </div>
@@ -183,7 +183,7 @@
       <div class="flex items-center gap-3">
         <a href="https://wa.me/918368631300?text=Hi%20Claimo%2C%20I%20have%20an%20e-commerce%20complaint." target="_blank" rel="noopener noreferrer" class="hidden lg:inline-flex items-center gap-1.5 text-xs text-white/80 hover:text-white px-3.5 py-2 rounded-full bg-white/5 border border-white/10 hover:border-accent/40 transition-colors">
           <span class="text-[#25D366]">●</span>
-          <span>+91 8368631300</span>
+          <span>WhatsApp Help</span>
         </a>
 
         <button class="btn-cta-primary open-case-modal hidden sm:inline-flex items-center gap-2 group">
@@ -1111,7 +1111,7 @@
           <div class="mt-3 flex flex-wrap items-center gap-4 text-xs font-mono text-white/70">
             <a href="tel:+918368631300" class="hover:text-accent flex items-center gap-1">📞 +91 8368631300</a>
             <span>·</span>
-            <a href="mailto:maheshwarimanya472@gmail.com" class="hover:text-accent flex items-center gap-1">✉️ maheshwarimanya472@gmail.com</a>
+            <a href="mailto:Claimo email support" class="hover:text-accent flex items-center gap-1">✉️ Claimo email support</a>
           </div>
         </div>
 
@@ -1121,7 +1121,7 @@
           <a href="#problems" class="hover:text-white transition-colors">What we handle</a>
           <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
           <a href="https://wa.me/918368631300" target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">WhatsApp Direct</a>
-          <a href="mailto:maheshwarimanya472@gmail.com" class="hover:text-white transition-colors">Email Support</a>
+          <a href="mailto:Claimo email support" class="hover:text-white transition-colors">Email Support</a>
           <a href="#privacy" class="hover:text-white transition-colors">Privacy</a>
           <a href="#terms" class="hover:text-white transition-colors">Terms</a>
         </div>
@@ -1202,11 +1202,20 @@
           <label class="block text-xs font-bold text-white/90 mb-1.5">4. Brief summary (1-2 sentences)</label>
           <textarea id="noteInput" rows="2" placeholder="e.g. Return was rejected citing policy, but parcel was damaged on arrival." class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:outline-none focus:border-accent placeholder-white/30 resize-none"></textarea>
         </div>
-
-        <!-- Step 4: Your Name / Contact -->
+        <!-- Step 4: Your Details -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-white/90 mb-1.5">5. Your Name</label>
+            <input type="text" id="claimoNameInput" placeholder="Your full name" autocomplete="name" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:outline-none focus:border-accent placeholder-white/30" required>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-white/90 mb-1.5">6. Mobile Number</label>
+            <input type="tel" id="claimoPhoneInput" placeholder="10-digit mobile number" autocomplete="tel" inputmode="tel" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:outline-none focus:border-accent placeholder-white/30" required>
+          </div>
+        </div>
         <div>
-          <label class="block text-xs font-bold text-white/90 mb-1.5">5. Your Name / Mobile Number</label>
-          <input type="text" id="contactInput" placeholder="Your name or phone number" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:outline-none focus:border-accent placeholder-white/30" required>
+          <label class="block text-xs font-bold text-white/90 mb-1.5">7. Email Address</label>
+          <input type="email" id="claimoEmailInput" placeholder="you@example.com" autocomplete="email" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:outline-none focus:border-accent placeholder-white/30" required>
         </div>
 
         <!-- Drag & Drop Evidence Mockup -->
@@ -1225,7 +1234,7 @@
           </button>
           
           <div class="text-center text-[10px] text-white/50">
-            Or direct email: <a href="mailto:maheshwarimanya472@gmail.com" class="text-white/80 underline hover:text-accent">maheshwarimanya472@gmail.com</a>
+            Or direct email: <a href="mailto:Claimo email support" class="text-white/80 underline hover:text-accent">Claimo email support</a>
           </div>
         </div>
 
@@ -1258,7 +1267,7 @@
           <a id="emailDirectLink" href="#" class="flex items-center justify-between p-3 rounded-xl bg-white/10 text-white font-bold hover:bg-white/20 transition-all">
             <span class="flex items-center gap-2">
               <span>✉️</span>
-              <span>Send to maheshwarimanya472@gmail.com</span>
+              <span>Send to Claimo email support</span>
             </span>
             <span>→</span>
           </a>

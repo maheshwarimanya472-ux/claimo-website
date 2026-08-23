@@ -562,3 +562,25 @@ function initModal() {
     closeModal();
   };
 }
+/* CLAIMO GOOGLE SHEETS CONNECTION */
+(() => {
+  const CLAIMO_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyOyLiUNIzZtVGBzGQA_mZFOb0-aaraDQCGOB7zcbXJpGs7VzKbHaLWUjbSpB9b96FB/exec';
+  document.addEventListener('DOMContentLoaded', () => {
+    const originalSubmit = window.handleCaseSubmit;
+    if (typeof originalSubmit !== 'function') return;
+    window.handleCaseSubmit = async function () {
+      const name = document.getElementById('claimoNameInput')?.value.trim() || '';
+      const phone = document.getElementById('claimoPhoneInput')?.value.trim() || '';
+      const email = document.getElementById('claimoEmailInput')?.value.trim() || '';
+      const issue = document.getElementById('issueSelect')?.value || '';
+      const platform = document.getElementById('platformInput')?.value || '';
+      const amount = document.getElementById('amountInput')?.value || '';
+      const note = document.getElementById('noteInput')?.value || '';
+      const params = new URLSearchParams({ name, phone, email, complaintType: issue, message: `Platform: ${platform}; Disputed Amount: ₹${amount}; ${note}`, source: 'Claimo Website' });
+      try {
+        await fetch(CLAIMO_SHEETS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }, body: params.toString() });
+      } catch (error) { console.warn('Claimo Google Sheets submission failed:', error); }
+      return originalSubmit();
+    };
+  });
+})();
