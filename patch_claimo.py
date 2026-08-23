@@ -66,3 +66,4 @@ if marker not in script:
 index_path.write_text(index, encoding='utf-8')
 script_path.write_text(script, encoding='utf-8')
 print('Claimo files patched')
+# Workflow trigger marker: 2026-08-23T17:00:00Z
