@@ -1,0 +1,50 @@
+name: Claimo targeted visual fix
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: ${{ !contains(github.event.head_commit.message, '[claimo-fix]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply only requested visual changes
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('index.html')
+          s = p.read_text()
+
+          # Remove Maya speech bubble only; keep Maya/avatar itself intact.
+          s = re.sub(r'\s*<!-- Proactive Speech Bubble.*?</div>\s*', '\n', s, count=1, flags=re.S)
+          s = re.sub(r'\s*<div[^>]*id="avatarSpeechBubble"[^>]*>.*?</div>\s*', '\n', s, count=1, flags=re.S)
+
+          # Keep the existing hero markup/assets, only adjust visible wording.
+          s = re.sub(r'Refund stuck\?.{0,120}?Claimo takes it forward\.', 'Refund stuck? Claimo takes it forward.', s, count=1)
+          s = re.sub(r"Tell us what went wrong\..{0,140}?complaint forward\.", "Tell us what went wrong. We’ll help take it forward.", s, count=1)
+
+          # Make the pricing message lead with the guarantee, preserving the existing card.
+          s = re.sub(r'Pay only when your grievance is solved\.', 'Get 100% cashback if we don’t solve it.', s, count=1)
+          s = re.sub(r'₹500.{0,100}?grievance solved\.', '₹500 per grievance solved.', s, count=1)
+
+          p.write_text(s)
+
+          css = Path('style.css')
+          c = css.read_text()
+          c += '''\n\n/* Claimo targeted visual fix */\n.hero-center-headline, .hero-center-subline { color:#fff !important; text-shadow:0 2px 18px rgba(0,0,0,.9); }\n.hero-center-headline { font-weight:800 !important; }\n.top-hero-viewport > .relative.z-10 { padding-top:15rem !important; transform:translateX(-1.25rem) !important; }\n@media (min-width:768px){ .top-hero-viewport > .relative.z-10 { padding-top:18rem !important; transform:translateX(-2rem) !important; } }\n#avatarSpeechBubble { display:none !important; }\n#pricing .pricing-card .text-4xl, #pricing .pricing-card .text-5xl, #pricing .pricing-card .text-6xl { font-weight:900 !important; }\n'''
+          css.write_text(c)
+          PY
+      - name: Commit fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html style.css
+          git diff --cached --quiet || git commit -m "Apply requested Claimo hero and pricing fix [claimo-fix]"
+          git push
