@@ -3,6 +3,7 @@ name: Claimo form update
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -27,10 +28,9 @@ jobs:
 
           marker = '<!-- CLAIMO GOOGLE SHEETS CONNECTED -->'
           if marker in index and 'CLAIMO GOOGLE SHEETS WRAPPER' in script:
-              print('Cla​​imo update already applied.')
+              print('Claimo update already applied.')
               raise SystemExit(0)
 
-          # Replace the old combined contact field with separate Name, Mobile and Email fields.
           old_contact = re.compile(
               r'\s*<!-- Step 4: Your Name / Contact -->.*?\n\s*</div>\n\n\s*<!-- Drag & Drop Evidence Mockup -->',
               re.S,
@@ -60,7 +60,6 @@ jobs:
           if count != 1:
               raise RuntimeError('Could not find the existing contact field block in index.html')
 
-          # Make personal contact details less prominent without breaking WhatsApp/email functionality.
           replacements = {
               '>+91 8368631300</span>': '>Chat on WhatsApp</span>',
               '>WhatsApp: +91 8368631300</span>': '>Chat on WhatsApp</span>',
@@ -73,7 +72,6 @@ jobs:
           for old, new in replacements.items():
               index = index.replace(old, new)
 
-          # Remove the visible footer contact row completely.
           index = re.sub(
               r'\s*<div class="mt-3 flex flex-wrap items-center gap-4 text-xs font-mono text-white/70">.*?</div>',
               '',
@@ -82,7 +80,6 @@ jobs:
               flags=re.S,
           )
 
-          # Add the Google Sheets wrapper after the existing script so the current WhatsApp/email flow is preserved.
           wrapper_marker = '/* CLAIMO GOOGLE SHEETS WRAPPER */'
           wrapper = r'''
 
