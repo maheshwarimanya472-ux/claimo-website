@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Apply only requested visual changes
+      - name: Apply requested Claimo visual changes
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -22,23 +22,65 @@ jobs:
           p = Path('index.html')
           s = p.read_text()
 
-          # Hide only the Maya speech bubble. Keep the Maya avatar image/button.
-          s = re.sub(r'\s*<!-- Proactive Speech Bubble.*?</div>\s*', '\n', s, count=1, flags=re.S)
-          s = re.sub(r'\s*<div[^>]*id="avatarSpeechBubble"[^>]*>.*?</div>\s*', '\n', s, count=1, flags=re.S)
+          # Restore repository-root image paths.
+          s = s.replace('src="assets/avatar-guide.jpg"', 'src="avatar-guide.jpg"')
+          s = s.replace('src="assets/damaged-package.jpg"', 'src="damaged-package.jpg"')
 
-          # Keep the existing hero markup/assets, only adjust visible wording.
-          s = re.sub(r'Refund stuck\?.{0,120}?Claimo takes it forward\.', 'Refund stuck? Claimo takes it forward.', s, count=1)
-          s = re.sub(r"Tell us what went wrong\..{0,140}?complaint forward\.", "Tell us what went wrong. We’ll help take it forward.", s, count=1)
+          # Replace the malformed Maya block with a clean bottom-left widget.
+          avatar = '''<!-- INTERACTIVE ANIMATED MOVING AI AVATAR GUIDE (Bottom Left) -->
+          <div class="fixed bottom-6 left-6 z-50 flex items-center avatar-floating-container" id="avatarGuideWidget">
+            <button class="avatar-trigger-btn relative group flex items-center gap-3.5 p-1.5 pr-4 rounded-full bg-[#12161E]/95 border-2 border-accent shadow-2xl shadow-accent/30 hover:scale-105 transition-transform" id="avatarTriggerBtn" aria-label="Open Claimo Resolution Guide">
+              <div class="relative w-14 h-14 rounded-full overflow-hidden border-2 border-accent bg-[#07090B]" id="avatarOrbContainer">
+                <img src="avatar-guide.jpg" alt="Maya Claimo AI Avatar Guide" class="avatar-image-layer w-full h-full object-cover" id="avatarImgLayer">
+              </div>
+              <div class="text-left">
+                <div class="text-xs font-black text-white">Maya <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-accent text-black font-extrabold">LIVE AI</span></div>
+                <div class="text-[10px] text-accent font-mono font-bold">Ask me anything →</div>
+              </div>
+            </button>
+          </div>
 
-          # Make the pricing message lead with the guarantee, preserving the existing card.
-          s = re.sub(r'Pay only when your grievance is solved\.', 'Get 100% cashback if we don’t solve it.', s, count=1)
-          s = re.sub(r'₹500.{0,100}?grievance solved\.', '₹500 per grievance solved.', s, count=1)
+          <!-- Header Navigation -->'''
+          s = re.sub(r'<!-- INTERACTIVE ANIMATED MOVING AI AVATAR GUIDE \(Bottom Left\) -->.*?<!-- Header Navigation -->', avatar, s, count=1, flags=re.S)
+
+          # Remove the two floating hero banners and replace the entire hero with only two lines + CTA.
+          hero = '''<section class="top-hero-viewport relative w-full min-h-screen flex items-center justify-center overflow-hidden" id="hero">
+            <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+              <video id="heroBgVideo" class="absolute inset-0 w-full h-full object-cover opacity-100" autoplay loop muted playsinline preload="auto">
+                <source src="Person_reads_refund_notification_202608231521.mp4" type="video/mp4">
+              </video>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/5"></div>
+            </div>
+            <div class="relative z-10 w-full max-w-4xl mx-auto px-6 text-center flex flex-col items-center justify-center pt-60 md:pt-72 -translate-x-4 md:-translate-x-8">
+              <h1 class="hero-center-headline font-black tracking-tight text-white leading-[1.08] text-3xl sm:text-5xl md:text-6xl max-w-3xl drop-shadow-2xl">Your refund shouldn't become a second job.</h1>
+              <p class="hero-center-subline mt-3 text-base sm:text-lg md:text-xl text-white font-bold max-w-2xl leading-snug drop-shadow-2xl">Tell Claimo. We'll help take it forward.</p>
+              <div class="pt-5"><button class="btn-cta-hero open-case-modal px-8 py-4"><span class="font-black text-black text-base">Get Help →</span></button></div>
+            </div>
+          </section>'''
+          s = re.sub(r'<section[^>]*id="hero"[^>]*>.*?</section>', hero, s, count=1, flags=re.S)
+
+          # Replace pricing section with the requested outcome-based model.
+          pricing = '''<section class="py-28 px-6 relative" id="pricing">
+            <div class="max-w-5xl mx-auto">
+              <div class="text-center space-y-4 mb-12">
+                <span class="text-xs font-mono font-bold uppercase text-accent">Simple. Outcome-based.</span>
+                <h2 class="text-4xl sm:text-6xl font-black text-white tracking-tight">Pay only for a successful resolution.</h2>
+              </div>
+              <div class="max-w-3xl mx-auto rounded-3xl bg-[#121A15] border-2 border-accent shadow-2xl shadow-accent/10 p-10 sm:p-14 text-center">
+                <div class="text-4xl sm:text-6xl font-black text-accent leading-tight">100% REFUND IF YOUR GRIEVANCE IS NOT SOLVED.</div>
+                <div class="mt-6 text-3xl sm:text-5xl font-black text-white">₹500 <span class="text-white/60">per grievance.</span></div>
+                <p class="mt-5 text-base sm:text-lg text-white/70 font-medium">Pay ₹500 for each grievance. If Claimo doesn't solve it, you get a 100% refund.</p>
+                <button class="btn-cta-primary open-case-modal mt-8 px-8 py-4 font-black">Start Your Grievance →</button>
+              </div>
+            </div>
+          </section>'''
+          s = re.sub(r'<section[^>]*id="pricing"[^>]*>.*?</section>', pricing, s, count=1, flags=re.S)
 
           p.write_text(s)
 
           css = Path('style.css')
           c = css.read_text()
-          c += '''\n\n/* Claimo targeted visual fix */\n.hero-center-headline, .hero-center-subline { color:#fff !important; text-shadow:0 2px 18px rgba(0,0,0,.9); }\n.hero-center-headline { font-weight:800 !important; }\n.top-hero-viewport > .relative.z-10 { padding-top:15rem !important; transform:translateX(-1.25rem) !important; }\n@media (min-width:768px){ .top-hero-viewport > .relative.z-10 { padding-top:18rem !important; transform:translateX(-2rem) !important; } }\n#avatarSpeechBubble { display:none !important; }\n#avatarGuideWidget { position:fixed !important; left:1.5rem !important; bottom:1.5rem !important; top:auto !important; right:auto !important; z-index:60 !important; }\n#avatarGuideWidget > #avatarTriggerBtn { position:relative !important; left:auto !important; top:auto !important; }\n#pricing .pricing-card .text-4xl, #pricing .pricing-card .text-5xl, #pricing .pricing-card .text-6xl { font-weight:900 !important; }\n#shopping-wrong { position:relative !important; }\n@media (min-width:1024px){ #shopping-wrong::before { content:""; position:absolute; left:5%; top:12rem; width:38%; height:28rem; background:linear-gradient(to top, rgba(7,9,11,.18), transparent 55%), url("damaged-package.jpg") center/cover no-repeat; border-radius:1.5rem; opacity:.98; box-shadow:0 20px 60px rgba(0,0,0,.35); pointer-events:none; z-index:0; } #shopping-wrong > * { position:relative; z-index:1; } }\n@media (max-width:1023px){ #shopping-wrong::before { content:""; display:block; width:100%; max-width:34rem; height:18rem; margin:0 auto 2rem; background:url("damaged-package.jpg") center/cover no-repeat; border-radius:1.5rem; box-shadow:0 20px 60px rgba(0,0,0,.35); } }\n'''
+          c += '''\n\n/* Final Claimo visual cleanup */\n.hero-center-headline, .hero-center-subline { color:#fff !important; text-shadow:0 2px 18px rgba(0,0,0,.9); }\n.hero-center-headline { font-weight:800 !important; }\n.top-hero-viewport > .relative.z-10 { padding-top:15rem !important; transform:translateX(-1.5rem) !important; }\n@media (min-width:768px){ .top-hero-viewport > .relative.z-10 { padding-top:18rem !important; transform:translateX(-2.5rem) !important; } }\n#avatarGuideWidget { position:fixed !important; left:1.5rem !important; bottom:1.5rem !important; top:auto !important; right:auto !important; z-index:60 !important; }\n#avatarGuideWidget .avatar-trigger-btn { position:relative !important; }\n#avatarSpeechBubble { display:none !important; }\n#shopping-wrong .lg\\:col-span-5 { min-height:28rem !important; }\n#shopping-wrong .lg\\:col-span-5 > img { width:100% !important; height:28rem !important; object-fit:cover !important; object-position:center !important; display:block !important; }\n@media (max-width:1023px){ #shopping-wrong .lg\\:col-span-5 > img { height:22rem !important; } }\n'''
           css.write_text(c)
           PY
       - name: Commit fix
@@ -46,5 +88,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html style.css
-          git diff --cached --quiet || git commit -m "Restore Maya and damaged parcel visual [claimo-fix]"
+          git diff --cached --quiet || git commit -m "Apply Claimo visual cleanup [claimo-fix]"
           git push
