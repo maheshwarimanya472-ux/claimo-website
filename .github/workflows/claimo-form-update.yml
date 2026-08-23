@@ -1,8 +1,6 @@
 name: Claimo form update
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -15,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Patch Claimo form and contact details
+      - name: Patch Claimo form
         shell: python
         run: |
           from pathlib import Path
@@ -26,114 +24,66 @@ jobs:
           index = index_path.read_text(encoding='utf-8')
           script = script_path.read_text(encoding='utf-8')
 
-          marker = '<!-- CLAIMO GOOGLE SHEETS CONNECTED -->'
-          if marker in index and 'CLAIMO GOOGLE SHEETS WRAPPER' in script:
-              print('Claimo update already applied.')
-              raise SystemExit(0)
-
-          old_contact = re.compile(
-              r'\s*<!-- Step 4: Your Name / Contact -->.*?\n\s*</div>\n\n\s*<!-- Drag & Drop Evidence Mockup -->',
-              re.S,
-          )
-          new_contact = '''
-        <!-- CLAIMO GOOGLE SHEETS CONNECTED -->
-        <!-- Step 4: Consumer Details -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-bold text-white/90 mb-1.5">5. Your Name</label>
-            <input type="text" id="nameInput" placeholder="Your full name" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:outline-none focus:border-accent placeholder-white/30" required>
+          if 'id="claimoNameInput"' not in index:
+              pattern = re.compile(r'\s*<!-- Step 4: Your Name / Contact -->.*?\n\s*</div>\n\s*<!-- Drag & Drop Evidence Mockup -->', re.S)
+              replacement = '''
+          <!-- Step 4: Your Details -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-white/90 mb-1.5">5. Your Name</label>
+              <input type="text" id="claimoNameInput" placeholder="Your full name" autocomplete="name" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:outline-none focus:border-accent placeholder-white/30" required>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-white/90 mb-1.5">6. Mobile Number</label>
+              <input type="tel" id="claimoPhoneInput" placeholder="10-digit mobile number" autocomplete="tel" inputmode="tel" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:outline-none focus:border-accent placeholder-white/30" required>
+            </div>
           </div>
           <div>
-            <label class="block text-xs font-bold text-white/90 mb-1.5">6. Mobile Number</label>
-            <input type="tel" id="phoneInput" placeholder="10-digit mobile number" inputmode="tel" autocomplete="tel" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:outline-none focus:border-accent placeholder-white/30" required>
+            <label class="block text-xs font-bold text-white/90 mb-1.5">7. Email Address</label>
+            <input type="email" id="claimoEmailInput" placeholder="you@example.com" autocomplete="email" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:outline-none focus:border-accent placeholder-white/30" required>
           </div>
-        </div>
 
-        <div>
-          <label class="block text-xs font-bold text-white/90 mb-1.5">7. Email Address</label>
-          <input type="email" id="emailInput" placeholder="you@example.com" autocomplete="email" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-xs focus:outline-none focus:border-accent placeholder-white/30" required>
-          <input type="hidden" id="contactInput" value="">
-        </div>
+          <!-- Drag & Drop Evidence Mockup -->'''
+              index, count = pattern.subn(replacement, index, count=1)
+              if count != 1:
+                  raise RuntimeError('Could not find the existing Claimo contact block')
 
-        <!-- Drag & Drop Evidence Mockup -->'''
-          index, count = old_contact.subn(new_contact, index, count=1)
-          if count != 1:
-              raise RuntimeError('Could not find the existing contact field block in index.html')
+          index = index.replace('>+91 8368631300</span>', '>Chat on WhatsApp</span>')
+          index = index.replace('Chat directly with specialist (+91 8368631300)', 'Chat directly with specialist')
+          index = index.replace('maheshwarimanya472@gmail.com', 'Claimo email support')
 
-          replacements = {
-              '>+91 8368631300</span>': '>Chat on WhatsApp</span>',
-              '>WhatsApp: +91 8368631300</span>': '>Chat on WhatsApp</span>',
-              'Chat on WhatsApp (+91 8368631300)': 'Chat on WhatsApp',
-              'Direct WhatsApp Assist (+91 8368631300)': 'Direct WhatsApp Assist',
-              'Chat directly with specialist (+91 8368631300)': 'Chat directly with specialist',
-              '✉️ maheshwarimanya472@gmail.com': '✉️ Email support',
-              'Send to maheshwarimanya472@gmail.com': 'Send by email',
-          }
-          for old, new in replacements.items():
-              index = index.replace(old, new)
+          marker = '/* CLAIMO GOOGLE SHEETS CONNECTION */'
+          if marker not in script:
+              connection = '''
 
-          index = re.sub(
-              r'\s*<div class="mt-3 flex flex-wrap items-center gap-4 text-xs font-mono text-white/70">.*?</div>',
-              '',
-              index,
-              count=1,
-              flags=re.S,
-          )
-
-          wrapper_marker = '/* CLAIMO GOOGLE SHEETS WRAPPER */'
-          wrapper = r'''
-
-/* CLAIMO GOOGLE SHEETS WRAPPER */
-(() => {
-  const CLAIMO_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyOyLiUNIzZtVGBzGQA_mZFOb0-aaraDQCGOB7zcbXJpGs7VzKbHaLWUjbSpB9b96FB/exec';
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const originalSubmit = window.handleCaseSubmit;
-    if (typeof originalSubmit !== 'function') return;
-
-    window.handleCaseSubmit = async function () {
-      const name = document.getElementById('nameInput')?.value.trim() || '';
-      const phone = document.getElementById('phoneInput')?.value.trim() || '';
-      const email = document.getElementById('emailInput')?.value.trim() || '';
-      const issue = document.getElementById('issueSelect')?.value || '';
-      const platform = document.getElementById('platformInput')?.value || '';
-      const amount = document.getElementById('amountInput')?.value || '';
-      const note = document.getElementById('noteInput')?.value || '';
-      const contactInput = document.getElementById('contactInput');
-
-      if (contactInput) contactInput.value = `${name} | ${phone}`;
-
-      const params = new URLSearchParams({
-        name,
-        phone,
-        email,
-        complaintType: issue,
-        message: `Platform: ${platform}; Disputed Amount: ₹${amount}; ${note}`,
-        source: 'Claimo Website'
-      });
-
-      try {
-        await fetch(CLAIMO_SHEETS_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-          body: params.toString()
-        });
-      } catch (error) {
-        console.warn('Claimo Google Sheets submission failed:', error);
-      }
-
-      return originalSubmit();
-    };
-  });
-})();
-'''
-          if wrapper_marker not in script:
-              script = script.rstrip() + wrapper
+          /* CLAIMO GOOGLE SHEETS CONNECTION */
+          (() => {
+            const CLAIMO_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyOyLiUNIzZtVGBzGQA_mZFOb0-aaraDQCGOB7zcbXJpGs7VzKbHaLWUjbSpB9b96FB/exec';
+            document.addEventListener('DOMContentLoaded', () => {
+              const originalSubmit = window.handleCaseSubmit;
+              if (typeof originalSubmit !== 'function') return;
+              window.handleCaseSubmit = async function () {
+                const name = document.getElementById('claimoNameInput')?.value.trim() || '';
+                const phone = document.getElementById('claimoPhoneInput')?.value.trim() || '';
+                const email = document.getElementById('claimoEmailInput')?.value.trim() || '';
+                const issue = document.getElementById('issueSelect')?.value || '';
+                const platform = document.getElementById('platformInput')?.value || '';
+                const amount = document.getElementById('amountInput')?.value || '';
+                const note = document.getElementById('noteInput')?.value || '';
+                const params = new URLSearchParams({ name, phone, email, complaintType: issue, message: `Platform: ${platform}; Disputed Amount: ₹${amount}; ${note}`, source: 'Claimo Website' });
+                try {
+                  await fetch(CLAIMO_SHEETS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' }, body: params.toString() });
+                } catch (error) { console.warn('Claimo Google Sheets submission failed:', error); }
+                return originalSubmit();
+              };
+            });
+          })();
+          '''
+              script = script.rstrip() + connection
 
           index_path.write_text(index, encoding='utf-8')
           script_path.write_text(script, encoding='utf-8')
-          print('Patched index.html and script.js')
+          print('Claimo patch complete')
 
       - name: Commit changes
         run: |
