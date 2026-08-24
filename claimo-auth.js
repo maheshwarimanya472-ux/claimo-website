@@ -148,6 +148,7 @@
   async function init(){
     injectStyles();
     createUI();
+    loadScript('maya-fix.js').catch(()=>{});
     await loadScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2');
     supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
     protectComplaintActions();
